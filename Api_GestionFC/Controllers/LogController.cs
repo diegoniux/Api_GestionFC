@@ -23,6 +23,7 @@ namespace Api_GestionFC.Controllers
         }
 
         [HttpPost]
+        [Route("SetLogSistema")]
         [AllowAnonymous]
         public async Task<LogSistemaDTO> SetLogSistema([FromBody] LogSistema logSistema)
         {
@@ -39,5 +40,27 @@ namespace Api_GestionFC.Controllers
                 };
             }
         }
+
+        [HttpPost]
+        [Route("SetLogError")]
+        [AllowAnonymous]
+        public async Task<LogErrorDTO> SetLogError([FromBody] LogError logError)
+        {
+            try
+            {
+                return await _repository.LogError(logError);
+            }
+            catch (Exception ex)
+            {
+                return new LogErrorDTO()
+                {
+                    LogError = new LogError(),
+                    ResultadoEjecucion = new ResultadoEjecucion() { EjecucionCorrecta = false, ErrorMessage = ex.Message, FriendlyMessage = "Ocurrió un error" }
+                };
+            }
+        }
+
+
+
     }
 }
