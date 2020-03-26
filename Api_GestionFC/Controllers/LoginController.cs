@@ -53,5 +53,19 @@ namespace Api_GestionFC.Controllers
                 return null;
             }
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public Usuario GetMessage()
+        {
+            try
+            {
+                return new Usuario() { Nomina = 23401, NombreCompleto = "Dieguito Maradona", Email = "dnieto@invercap.com.mx" };
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }
