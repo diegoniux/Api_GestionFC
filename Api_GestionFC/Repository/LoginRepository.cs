@@ -62,37 +62,39 @@ namespace Api_GestionFC.Repository
             try
             {
                 //Código para hacer el lógin del usuario
-                string json = "{ \"nomina\": " + loginData.Nomina.ToString() + ", \"password\": \"" + loginData.Password + "\" }";
+                string json = "{ \"nomina\": " + loginData.Nomina.ToString() + 
+                               ", \"password\": \"" + loginData.Password + "\" }";
 
                 ObtieneDatosUsuarioJsonResponse jsonResult = JsonConvert.DeserializeObject<ObtieneDatosUsuarioJsonResponse>(EnvioPeticionRest(json));
 
-                if (jsonResult.ObtieneDatosUsuarioResult.Autorizado)
+                Response.UsuarioAutorizado = jsonResult.ObtieneDatosUsuarioResult.Autorizado;
+                Response.Usuario = new Usuario()
                 {
-                    Response.Usuario = new Usuario()
-                    {
-                        Nomina = loginData.Nomina,
-                        NombreCompleto = jsonResult.ObtieneDatosUsuarioResult.NombreCompleto,
-                        Email = string.Empty
-                    };
+                    Nomina = loginData.Nomina,
+                    NombreCompleto = jsonResult.ObtieneDatosUsuarioResult.NombreCompleto,
+                    Email = string.Empty
+                };
 
-
-                    // authentication successful so generate jwt token
-                    var tokenHandler = new JwtSecurityTokenHandler();
-                    var key = Encoding.ASCII.GetBytes(_configuration["Secret"]);
-                    var tokenDescriptor = new SecurityTokenDescriptor
+                // authentication successful so generate jwt token
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_configuration["Secret"]);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
                     {
-                        Subject = new ClaimsIdentity(new Claim[]
-                        {
-                            new Claim("userData", JsonConvert.SerializeObject(Response.Usuario) )
-                        }),
-                        Expires = DateTime.UtcNow.AddMinutes(1),
-                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                    };
-                    var token = tokenHandler.CreateToken(tokenDescriptor);
-                    Response.Token = tokenHandler.WriteToken(token);
-                    Response.ResultadoEjecucion = new ResultadoEjecucion() { EjecucionCorrecta = true, ErrorMessage = null, FriendlyMessage = null };
-                }
-                else throw new Exception("Usuario no autorizado.");
+                        new Claim("userData", JsonConvert.SerializeObject(Response.Usuario) )
+                    }),
+                    Expires = DateTime.UtcNow.AddMinutes(1),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                Response.Token = tokenHandler.WriteToken(token);
+                Response.ResultadoEjecucion = new ResultadoEjecucion() 
+                { 
+                    EjecucionCorrecta = true, 
+                    ErrorMessage = null, 
+                    FriendlyMessage = null 
+                };
             }
             catch (Exception ex)
             {

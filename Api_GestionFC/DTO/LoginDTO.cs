@@ -8,8 +8,9 @@ namespace Api_GestionFC.DTO
 {
     public class LoginDTO
     {
-        public Usuario Usuario { get; set; }
         public ResultadoEjecucion ResultadoEjecucion { get; set; }
+        public bool UsuarioAutorizado { get; set; }
+        public Usuario Usuario { get; set; }
         public string Token { get; set; }
 
     }
