@@ -27,7 +27,7 @@ namespace Api_GestionFC.Repository
             this._configuration = configuration;
         }
 
-        public DTO.GridPromotoresDTO GetGridPromotores(int nomina)
+        public async Task<DTO.GridPromotoresDTO> GetGridPromotores(int nomina)
         {
             return new DTO.GridPromotoresDTO();
         }
