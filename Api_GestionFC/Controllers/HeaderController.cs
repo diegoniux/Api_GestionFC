@@ -20,7 +20,7 @@ namespace Api_GestionFC.Controllers
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        [HttpGet("{nomina}")]
+        [HttpGet("GetHeader/{nomina}")]
         [AllowAnonymous]
         public async Task<DTO.HeaderDTO> GetHeader(int nomina)
         {
