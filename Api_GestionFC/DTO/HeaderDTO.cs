@@ -23,5 +23,10 @@ namespace Api_GestionFC.DTO
         public string Genero { get; set; }
         public string FotoGerente { get; set; }
         public string FotoGerenteColor { get; set; }
+
+        public HeaderDTO() 
+        {
+            this.ResultadoEjecucion = new Models.ResultadoEjecucion();
+        }
     }
 }

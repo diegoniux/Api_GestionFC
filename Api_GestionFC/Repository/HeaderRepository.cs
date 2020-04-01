@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using DTO = Api_GestionFC.DTO;
+using Models = Api_GestionFC.Models;
 
 namespace Api_GestionFC.Repository
 {
@@ -21,25 +22,23 @@ namespace Api_GestionFC.Repository
 
         public async Task<DTO.HeaderDTO> GetHeader(int nomina)
         {
-            var response = new DTO.GridPromotoresDTO();
+            var response = new DTO.HeaderDTO();
             try
             {
                 using (SqlConnection sqlConn = new SqlConnection(_connectionString))
-                {
-                    using (SqlCommand sqlCmd = new SqlCommand("GFC.Spi_LogSistema", sqlConn))
+                { 
+                    using (SqlCommand sqlCmd = new SqlCommand("GFC.Sps_Datos_Header", sqlConn))
                     {
                         sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                         sqlCmd.Parameters.AddWithValue("@p_Nomina", nomina);
-
                         await sqlConn.OpenAsync();
 
                         using (var reader = await sqlCmd.ExecuteReaderAsync())
                         {
                             await reader.ReadAsync();
-                            response.Promotores.Add();
 
-                            response.ResultadoEjecucion.EjecucionCorrecta = (bool)reader["EjecucionCorrecta"];
+                            response.ResultadoEjecucion.EjecucionCorrecta = Convert.ToBoolean(reader["EjecucionCorrecta"]);
                             //Si la ejecución es exitosa
                             if (response.ResultadoEjecucion.EjecucionCorrecta)
                             {

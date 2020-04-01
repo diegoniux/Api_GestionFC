@@ -20,10 +20,22 @@ namespace Api_GestionFC.Controllers
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        [HttpGet("GetHeader/{nomina}")]
-        public async Task<DTO.GridPromotoresDTO> GetHeader(int nomina)
+        [HttpGet("{nomina}")]
+        [AllowAnonymous]
+        public async Task<DTO.HeaderDTO> GetHeader(int nomina)
         {
-            return await _repository.GetHeader(nomina);
+            var response = new DTO.HeaderDTO();
+            try
+            {
+                response = await _repository.GetHeader(nomina);
+            }
+            catch (Exception ex)
+            {
+                response.ResultadoEjecucion.EjecucionCorrecta = false;
+                response.ResultadoEjecucion.ErrorMessage = ex.Message;
+                response.ResultadoEjecucion.FriendlyMessage = ex.Message;
+            }
+            return response;
         }
     }
 }
