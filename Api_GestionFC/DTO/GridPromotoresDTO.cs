@@ -10,6 +10,12 @@ namespace Api_GestionFC.DTO
     {
         public Models.ResultadoEjecucion ResultadoEjecucion { get; set; }
         public List<Models.Promotor> Promotores { get; set; }
+
+        public GridPromotoresDTO()
+        {
+            this.ResultadoEjecucion = new Models.ResultadoEjecucion();
+            this.Promotores = new List<Models.Promotor>();
+        }
     }
 
 }

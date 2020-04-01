@@ -24,7 +24,18 @@ namespace Api_GestionFC.Controllers
         [HttpGet("GetGridPromotores/{nomina}")]
         public async Task<DTO.GridPromotoresDTO> GetGridPromotores(int nomina)
         {
-            return await _repository.GetGridPromotores(nomina);
+            var response = new DTO.GridPromotoresDTO();
+            try
+            { 
+                response = await _repository.GetGridPromotores(nomina);
+            }
+            catch (Exception ex)
+            {
+                response.ResultadoEjecucion.EjecucionCorrecta = false;
+                response.ResultadoEjecucion.ErrorMessage = ex.Message;
+                response.ResultadoEjecucion.FriendlyMessage = ex.Message;
+            }
+            return response;
         }
     }
 }

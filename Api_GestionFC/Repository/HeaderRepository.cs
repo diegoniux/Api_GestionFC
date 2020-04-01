@@ -36,45 +36,41 @@ namespace Api_GestionFC.Repository
 
                         using (var reader = await sqlCmd.ExecuteReaderAsync())
                         {
-                            
-
                             while (await reader.ReadAsync())
                             {
-                                response.SaldoAcumulado = reader["SaldoAcumulado"].ToString();
-                                response.SaldoVirtual = reader["SaldoVirtual"].ToString();
-                                response.SaldoSimulado = reader["SaldoSimulado"].ToString();
-                                response.PorcentajeCumplimiento = reader["PorcentajeCumplimiento"].ToString();
-                                response.CumplimientoColor = reader["CumplimientoColor"].ToString();
-                                response.PorcentajeSimulacion = reader["PorcentajeSimulacion"].ToString();
-                                response.SimulacionColor = reader["SimulacionColor"].ToString();
-                                response.NumPlantilla = Convert.ToInt32(reader["NumPlantilla"]);
-                                response.NumAgentesMeta = Convert.ToInt32(reader["NumAgentesMeta"]);
-                                response.NumFCTInactivos = Convert.ToInt32(reader["NumFCTInactivos"]);
-                                response.NumTramitesCert = Convert.ToInt32(reader["NumTramitesCert"]);
-                                response.Genero = reader["Genero"].ToString();
-                                response.FotoGerente = reader["FotoGerente"].ToString();
-                                response.FotoGerenteColor = reader["FotoGerenteColor"].ToString();
+                                response.ResultadoEjecucion.EjecucionCorrecta = Convert.ToBoolean(reader["EjecucionCorrecta"]);
+                                response.ResultadoEjecucion.ErrorMessage = reader["Mensaje"].ToString();
+                                response.ResultadoEjecucion.FriendlyMessage = reader["Mensaje"].ToString();
                             }
 
-                            //response.ResultadoEjecucion.EjecucionCorrecta = Convert.ToBoolean(reader["EjecucionCorrecta"]);
-                            ////Si la ejecución es exitosa
-                            //if (response.ResultadoEjecucion.EjecucionCorrecta)
-                            //{
-                            //    response.ResultadoEjecucion.ErrorMessage = reader["Mensaje"].ToString();
-                            //    response.ResultadoEjecucion.FriendlyMessage = reader["Mensaje"].ToString();
-                            //}
-                            //else
-                            //{
-                            //    response.ResultadoEjecucion.ErrorMessage = reader["Mensaje"].ToString();
-                            //    response.ResultadoEjecucion.FriendlyMessage = reader["Mensaje"].ToString();
-                            //}
+                            //Si la ejecución es exitosa                                 
+                            if (response.ResultadoEjecucion.EjecucionCorrecta)
+                            {
+                                reader.NextResult();
+                                while (await reader.ReadAsync())
+                                {
+                                    response.SaldoAcumulado = reader["SaldoAcumulado"].ToString();
+                                    response.SaldoVirtual = reader["SaldoVirtual"].ToString();
+                                    response.SaldoSimulado = reader["SaldoSimulado"].ToString();
+                                    response.PorcentajeCumplimiento = reader["PorcentajeCumplimiento"].ToString();
+                                    response.CumplimientoColor = reader["CumplimientoColor"].ToString();
+                                    response.PorcentajeSimulacion = reader["PorcentajeSimulacion"].ToString();
+                                    response.SimulacionColor = reader["SimulacionColor"].ToString();
+                                    response.NumPlantilla = Convert.ToInt32(reader["NumPlantilla"]);
+                                    response.NumAgentesMeta = Convert.ToInt32(reader["NumAgentesMeta"]);
+                                    response.NumFCTInactivos = Convert.ToInt32(reader["NumFCTInactivos"]);
+                                    response.NumTramitesCert = Convert.ToInt32(reader["NumTramitesCert"]);
+                                    response.Genero = reader["Genero"].ToString();
+                                    response.FotoGerente = reader["FotoGerente"].ToString();
+                                    response.FotoGerenteColor = reader["FotoGerenteColor"].ToString();
+                                }
+                            }
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return response;
