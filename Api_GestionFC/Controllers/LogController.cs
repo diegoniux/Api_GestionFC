@@ -22,9 +22,7 @@ namespace Api_GestionFC.Controllers
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        [HttpPost]
-        [Route("SetLogSistema")]
-        [AllowAnonymous]
+        [HttpPost("SetLogSistema")]
         public async Task<LogSistemaDTO> SetLogSistema([FromBody] LogSistema logSistema)
         {
             try
@@ -41,9 +39,7 @@ namespace Api_GestionFC.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("SetLogError")]
-        [AllowAnonymous]
+        [HttpPost("SetLogError")]
         public async Task<LogErrorDTO> SetLogError([FromBody] LogError logError)
         {
             try
