@@ -22,7 +22,7 @@ namespace Api_GestionFC.Repository
         private readonly IConfiguration _configuration;
 
         public LoginRepository(IConfiguration configuration)
-        {
+        {            
             _connectionString = configuration.GetConnectionString("AfiliacionDB");
             this._configuration = configuration;
         }
@@ -32,7 +32,7 @@ namespace Api_GestionFC.Repository
             string Resultado = string.Empty;
             try
             {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://desaiis01/ICAP_AfiliacionServices_GFC/GerentesFC/GerentesFCService.svc/ObtieneDatosUsuario");
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(this._configuration.GetValue<string>("appSettings:AutenticarUsuario"));
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
                 httpWebRequest.Timeout = 600000;
@@ -67,28 +67,31 @@ namespace Api_GestionFC.Repository
 
                 ObtieneDatosUsuarioJsonResponse jsonResult = JsonConvert.DeserializeObject<ObtieneDatosUsuarioJsonResponse>(EnvioPeticionRest(json));
 
-                Response.UsuarioAutorizado = jsonResult.ObtieneDatosUsuarioResult.Autorizado;
+                Response.UsuarioAutorizado = jsonResult.ObtieneDatosUsuarioResult.UsuarioAutorizado;
                 Response.Usuario = new Usuario()
                 {
                     Nomina = loginData.Nomina,
-                    NombreCompleto = jsonResult.ObtieneDatosUsuarioResult.NombreCompleto,
+                    NombreCompleto = string.Empty,
                     Email = string.Empty
                 };
-
-                // authentication successful so generate jwt token
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_configuration["Secret"]);
-                var tokenDescriptor = new SecurityTokenDescriptor
+                Response.EsGerente = jsonResult.ObtieneDatosUsuarioResult.EsGerente;
+                if (Response.UsuarioAutorizado && Response.EsGerente)
                 {
-                    Subject = new ClaimsIdentity(new Claim[]
+                    // authentication successful so generate jwt token
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var key = Encoding.ASCII.GetBytes(_configuration["Secret"]);
+                    var tokenDescriptor = new SecurityTokenDescriptor
                     {
+                        Subject = new ClaimsIdentity(new Claim[]
+                        {
                         new Claim("userData", JsonConvert.SerializeObject(Response.Usuario) )
-                    }),
-                    Expires = DateTime.UtcNow.AddMinutes(1),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                };
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                Response.Token = tokenHandler.WriteToken(token);
+                        }),
+                        Expires = DateTime.UtcNow.AddMinutes(1),
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                    };
+                    var token = tokenHandler.CreateToken(tokenDescriptor);
+                    Response.Token = tokenHandler.WriteToken(token);
+                }
                 Response.ResultadoEjecucion = new ResultadoEjecucion() 
                 { 
                     EjecucionCorrecta = true, 
@@ -106,9 +109,10 @@ namespace Api_GestionFC.Repository
         }
 
         public class ObtieneDatosUsuarioResponse
-        {
-            public string NombreCompleto { get; set; }
-            public bool Autorizado { get; set; }
+        {            
+            public bool UsuarioAutorizado { get; set; }
+            public bool EsGerente { get; set; }
+            public bool Activo { get; set; }
         }
         public class ObtieneDatosUsuarioJsonResponse
         {

@@ -11,6 +11,7 @@ namespace Api_GestionFC.DTO
         public ResultadoEjecucion ResultadoEjecucion { get; set; }
         public bool UsuarioAutorizado { get; set; }
         public Usuario Usuario { get; set; }
+        public bool EsGerente { get; set; }
         public string Token { get; set; }
 
     }
