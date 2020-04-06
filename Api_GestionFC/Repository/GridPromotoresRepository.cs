@@ -57,18 +57,18 @@ namespace Api_GestionFC.Repository
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
-                                    response.Promotores.Add(
-                                        new Models.Promotor
-                                        {
-                                            Nomina = Convert.ToInt32(reader["Nomina"]),
-                                            Nombre = reader["Nombre"].ToString(),
-                                            ApellidoPaterno = reader["ApellidoPaterno"].ToString(),
-                                            ApellidoMaterno = reader["ApellidoMaterno"].ToString(),
-                                            Foto = reader["Foto"].ToString(),
-                                            FotoColor = reader["FotoColor"].ToString(),
-                                            PorcentajeMeta = reader["PorcentajeMeta"].ToString(),
-                                            PorcentajeMetaColor = reader["PorcentajeMetaColor"].ToString()
-                                        });
+                                    response.Progreso.Nombre = reader["Nombre"].ToString();
+                                    response.Progreso.Apellidos = reader["Apellidos"].ToString();
+                                    response.Progreso.Foto = reader["Foto"].ToString();
+                                    response.Progreso.Genero = reader["Genero"].ToString();
+                                    response.Progreso.ColorIndicadorMeta = reader["ColorIndicadorMeta"].ToString();
+                                    response.Progreso.SaldoVirtual = reader["SaldoVirtual"].ToString();
+                                    response.Progreso.SaldoCantadoFCT = reader["SaldoCantadoFCT"].ToString();
+                                    response.Progreso.SaldoAcumulado = reader["SaldoAcumulado"].ToString();
+                                    response.Progreso.PorcentajeSaldoAcumulado = Convert.ToDecimal(reader["PorcentajeSaldoAcumulado"]);
+                                    response.Progreso.PorcentajeSaldoVirtual = Convert.ToDecimal(reader["PorcentajeSaldoVirtual"]);
+                                    response.Progreso.FCTInactivos = Convert.ToInt32(reader["FCTInactivos"]);
+                                    response.Progreso.TramitesCertificados = Convert.ToInt32(reader["TramitesCertificados"]);
                                 }
                             }
                         }

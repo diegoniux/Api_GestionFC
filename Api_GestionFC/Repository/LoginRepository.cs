@@ -68,13 +68,14 @@ namespace Api_GestionFC.Repository
                 ObtieneDatosUsuarioJsonResponse jsonResult = JsonConvert.DeserializeObject<ObtieneDatosUsuarioJsonResponse>(EnvioPeticionRest(json));
 
                 Response.UsuarioAutorizado = jsonResult.ObtieneDatosUsuarioResult.UsuarioAutorizado;
-                Response.Usuario = new Usuario()
+                Usuario Usuario = new Usuario()
                 {
                     Nomina = loginData.Nomina,
                     NombreCompleto = string.Empty,
                     Email = string.Empty
                 };
                 Response.EsGerente = jsonResult.ObtieneDatosUsuarioResult.EsGerente;
+                Response.Activo = jsonResult.ObtieneDatosUsuarioResult.Activo;
                 if (Response.UsuarioAutorizado && Response.EsGerente)
                 {
                     // authentication successful so generate jwt token
@@ -84,7 +85,7 @@ namespace Api_GestionFC.Repository
                     {
                         Subject = new ClaimsIdentity(new Claim[]
                         {
-                        new Claim("userData", JsonConvert.SerializeObject(Response.Usuario) )
+                        new Claim("userData", JsonConvert.SerializeObject(Usuario) )
                         }),
                         Expires = DateTime.UtcNow.AddMinutes(1),
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

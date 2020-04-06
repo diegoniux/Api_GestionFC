@@ -8,25 +8,15 @@ namespace Api_GestionFC.DTO
 {
     public class HeaderDTO
     {
-        public Models.ResultadoEjecucion ResultadoEjecucion { get; set; }
-        public string SaldoAcumulado { get; set; }
-        public string SaldoVirtual { get; set; }
-        public string SaldoSimulado { get; set; }
-        public string PorcentajeCumplimiento{ get; set; }
-        public string CumplimientoColor { get; set; }
-        public string PorcentajeSimulacion { get; set; }
-        public string SimulacionColor { get; set; }
-        public int NumPlantilla { get; set; }
-        public int NumAgentesMeta { get; set; }
-        public int NumFCTInactivos { get; set; }
-        public int NumTramitesCert { get; set; }
-        public string Genero { get; set; }
-        public string FotoGerente { get; set; }
-        public string FotoGerenteColor { get; set; }
+        public Models.ResultadoEjecucion ResultadoEjecucion { get; set; }       
+        public int Plantilla { get; set; }
+        public int APsMetaAlcanzada { get; set; }
+        public Models.Progreso Progreso { get; set; }        
 
         public HeaderDTO() 
         {
             this.ResultadoEjecucion = new Models.ResultadoEjecucion();
+            this.Progreso = new Models.Progreso();
         }
     }
 }

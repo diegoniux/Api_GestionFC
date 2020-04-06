@@ -49,20 +49,20 @@ namespace Api_GestionFC.Repository
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
-                                    response.SaldoAcumulado = reader["SaldoAcumulado"].ToString();
-                                    response.SaldoVirtual = reader["SaldoVirtual"].ToString();
-                                    response.SaldoSimulado = reader["SaldoSimulado"].ToString();
-                                    response.PorcentajeCumplimiento = reader["PorcentajeCumplimiento"].ToString();
-                                    response.CumplimientoColor = reader["CumplimientoColor"].ToString();
-                                    response.PorcentajeSimulacion = reader["PorcentajeSimulacion"].ToString();
-                                    response.SimulacionColor = reader["SimulacionColor"].ToString();
-                                    response.NumPlantilla = Convert.ToInt32(reader["NumPlantilla"]);
-                                    response.NumAgentesMeta = Convert.ToInt32(reader["NumAgentesMeta"]);
-                                    response.NumFCTInactivos = Convert.ToInt32(reader["NumFCTInactivos"]);
-                                    response.NumTramitesCert = Convert.ToInt32(reader["NumTramitesCert"]);
-                                    response.Genero = reader["Genero"].ToString();
-                                    response.FotoGerente = reader["FotoGerente"].ToString();
-                                    response.FotoGerenteColor = reader["FotoGerenteColor"].ToString();
+                                    response.Plantilla = Convert.ToInt32(reader["Plantilla"]);
+                                    response.APsMetaAlcanzada = Convert.ToInt32(reader["APsMetaAlcanzada"]);
+                                    response.Progreso.Nombre = reader["Nombre"].ToString();
+                                    response.Progreso.Apellidos = reader["Apellidos"].ToString();
+                                    response.Progreso.Foto = reader["Foto"].ToString();
+                                    response.Progreso.Genero = reader["Genero"].ToString();
+                                    response.Progreso.ColorIndicadorMeta = reader["ColorIndicadorMeta"].ToString();
+                                    response.Progreso.SaldoVirtual = reader["SaldoVirtual"].ToString();
+                                    response.Progreso.SaldoCantadoFCT = reader["SaldoCantadoFCT"].ToString();
+                                    response.Progreso.SaldoAcumulado = reader["SaldoAcumulado"].ToString();
+                                    response.Progreso.PorcentajeSaldoAcumulado = Convert.ToDecimal(reader["PorcentajeSaldoAcumulado"]);
+                                    response.Progreso.PorcentajeSaldoVirtual = Convert.ToDecimal(reader["PorcentajeSaldoVirtual"]);
+                                    response.Progreso.FCTInactivos = Convert.ToInt32(reader["FCTInactivos"]);
+                                    response.Progreso.TramitesCertificados = Convert.ToInt32(reader["TramitesCertificados"]);
                                 }
                             }
                         }
