@@ -57,18 +57,20 @@ namespace Api_GestionFC.Repository
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
-                                    response.Progreso.Nombre = reader["Nombre"].ToString();
-                                    response.Progreso.Apellidos = reader["Apellidos"].ToString();
-                                    response.Progreso.Foto = reader["Foto"].ToString();
-                                    response.Progreso.Genero = reader["Genero"].ToString();
-                                    response.Progreso.ColorIndicadorMeta = reader["ColorIndicadorMeta"].ToString();
-                                    response.Progreso.SaldoVirtual = reader["SaldoVirtual"].ToString();
-                                    response.Progreso.SaldoCantadoFCT = reader["SaldoCantadoFCT"].ToString();
-                                    response.Progreso.SaldoAcumulado = reader["SaldoAcumulado"].ToString();
-                                    response.Progreso.PorcentajeSaldoAcumulado = Convert.ToDecimal(reader["PorcentajeSaldoAcumulado"]);
-                                    response.Progreso.PorcentajeSaldoVirtual = Convert.ToDecimal(reader["PorcentajeSaldoVirtual"]);
-                                    response.Progreso.FCTInactivos = Convert.ToInt32(reader["FCTInactivos"]);
-                                    response.Progreso.TramitesCertificados = Convert.ToInt32(reader["TramitesCertificados"]);
+                                    response.Promotores.Add(new Models.Progreso { 
+                                        Nombre = reader["Nombre"].ToString(),
+                                        Apellidos = reader["Apellidos"].ToString(),
+                                        Foto = reader["Foto"].ToString(),
+                                        Genero = reader["Genero"].ToString(),
+                                        ColorIndicadorMeta = reader["ColorIndicadorMeta"].ToString(),
+                                        SaldoVirtual = reader["SaldoVirtual"].ToString(),
+                                        SaldoCantadoFCT = reader["SaldoCantadoFCT"].ToString(),
+                                        SaldoAcumulado = reader["SaldoAcumulado"].ToString(),
+                                        PorcentajeSaldoAcumulado = Convert.ToDecimal(reader["PorcentajeSaldoAcumulado"]),
+                                        PorcentajeSaldoVirtual = Convert.ToDecimal(reader["PorcentajeSaldoVirtual"]),
+                                        FCTInactivos = Convert.ToInt32(reader["FCTInactivos"]),
+                                        TramitesCertificados = Convert.ToInt32(reader["TramitesCertificados"])
+                                    });
                                 }
                             }
                         }

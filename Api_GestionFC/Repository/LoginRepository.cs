@@ -22,7 +22,7 @@ namespace Api_GestionFC.Repository
         private readonly IConfiguration _configuration;
 
         public LoginRepository(IConfiguration configuration)
-        {            
+        {
             _connectionString = configuration.GetConnectionString("AfiliacionDB");
             this._configuration = configuration;
         }
@@ -59,25 +59,21 @@ namespace Api_GestionFC.Repository
         public LoginDTO LoginUser(LoginData loginData)
         {
             LoginDTO Response = new LoginDTO();
+            Usuario Usuario;
             try
             {
                 //Código para hacer el lógin del usuario
-                string json = "{ \"nomina\": " + loginData.Nomina.ToString() + 
+                string json = "{ \"nomina\": " + loginData.Nomina.ToString() +
                                ", \"password\": \"" + loginData.Password + "\" }";
 
                 ObtieneDatosUsuarioJsonResponse jsonResult = JsonConvert.DeserializeObject<ObtieneDatosUsuarioJsonResponse>(EnvioPeticionRest(json));
 
-                Response.UsuarioAutorizado = jsonResult.ObtieneDatosUsuarioResult.UsuarioAutorizado;
-                Usuario Usuario = new Usuario()
-                {
-                    Nomina = loginData.Nomina,
-                    NombreCompleto = string.Empty,
-                    Email = string.Empty
-                };
-                Response.EsGerente = jsonResult.ObtieneDatosUsuarioResult.EsGerente;
-                Response.Activo = jsonResult.ObtieneDatosUsuarioResult.Activo;
+                Response.UsuarioAutorizado = jsonResult.AutenticarUsuarioResult.UsuarioAutorizado;
+                Response.EsGerente = jsonResult.AutenticarUsuarioResult.EsGerente;
+                Response.Activo = jsonResult.AutenticarUsuarioResult.Activo;
                 if (Response.UsuarioAutorizado && Response.EsGerente)
                 {
+
                     // authentication successful so generate jwt token
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var key = Encoding.ASCII.GetBytes(_configuration["Secret"]);
@@ -85,7 +81,12 @@ namespace Api_GestionFC.Repository
                     {
                         Subject = new ClaimsIdentity(new Claim[]
                         {
-                        new Claim("userData", JsonConvert.SerializeObject(Usuario) )
+                        new Claim("userData", JsonConvert.SerializeObject(new Usuario()
+                                                                            {
+                                                                                Nomina = loginData.Nomina,
+                                                                                NombreCompleto = string.Empty,
+                                                                                Email = string.Empty
+                                                                            }) )
                         }),
                         Expires = DateTime.UtcNow.AddMinutes(1),
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -93,16 +94,15 @@ namespace Api_GestionFC.Repository
                     var token = tokenHandler.CreateToken(tokenDescriptor);
                     Response.Token = tokenHandler.WriteToken(token);
                 }
-                Response.ResultadoEjecucion = new ResultadoEjecucion() 
-                { 
-                    EjecucionCorrecta = true, 
-                    ErrorMessage = null, 
-                    FriendlyMessage = null 
+                Response.ResultadoEjecucion = new ResultadoEjecucion()
+                {
+                    EjecucionCorrecta = true,
+                    ErrorMessage = null,
+                    FriendlyMessage = null
                 };
             }
             catch (Exception ex)
             {
-                Response.Usuario = null;
                 Response.ResultadoEjecucion = new ResultadoEjecucion() { EjecucionCorrecta = false, ErrorMessage = ex.Message, FriendlyMessage = "Ocurrió un error" };
                 Response.Token = null;
             }
@@ -110,14 +110,14 @@ namespace Api_GestionFC.Repository
         }
 
         public class ObtieneDatosUsuarioResponse
-        {            
+        {
             public bool UsuarioAutorizado { get; set; }
             public bool EsGerente { get; set; }
             public bool Activo { get; set; }
         }
         public class ObtieneDatosUsuarioJsonResponse
         {
-            public ObtieneDatosUsuarioResponse ObtieneDatosUsuarioResult { get; set; }
+            public ObtieneDatosUsuarioResponse AutenticarUsuarioResult { get; set; }
         }
     }
 }
