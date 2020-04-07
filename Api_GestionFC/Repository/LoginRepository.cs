@@ -75,20 +75,27 @@ namespace Api_GestionFC.Repository
                     Email = string.Empty
                 };
 
-                // authentication successful so generate jwt token
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_configuration["Secret"]);
-                var tokenDescriptor = new SecurityTokenDescriptor
+                //Si el usuario tien auto
+                if (Response.UsuarioAutorizado && Response.EsGerente)
                 {
-                    Subject = new ClaimsIdentity(new Claim[]
+                    // authentication successful so generate jwt token
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var key = Encoding.ASCII.GetBytes(_configuration["Secret"]);
+                    var tokenDescriptor = new SecurityTokenDescriptor
                     {
+                        Subject = new ClaimsIdentity(new Claim[]
+                        {
                         new Claim("userData", JsonConvert.SerializeObject(Response.Usuario) )
-                    }),
-                    Expires = DateTime.UtcNow.AddMinutes(1),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                };
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                Response.Token = tokenHandler.WriteToken(token);
+                        }),
+                        Expires = DateTime.UtcNow.AddMinutes(1),
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                    };
+                    var token = tokenHandler.CreateToken(tokenDescriptor);
+                    Response.Token = tokenHandler.WriteToken(token);
+                }
+
+
+
                 Response.ResultadoEjecucion = new ResultadoEjecucion() 
                 { 
                     EjecucionCorrecta = true, 
@@ -99,7 +106,12 @@ namespace Api_GestionFC.Repository
             catch (Exception ex)
             {
                 Response.Usuario = null;
-                Response.ResultadoEjecucion = new ResultadoEjecucion() { EjecucionCorrecta = false, ErrorMessage = ex.Message, FriendlyMessage = "Ocurrió un error" };
+                Response.ResultadoEjecucion = new ResultadoEjecucion() 
+                { 
+                    EjecucionCorrecta = false, 
+                    ErrorMessage = ex.Message, 
+                    FriendlyMessage = "Ocurrió un error" 
+                };
                 Response.Token = null;
             }
             return Response;
