@@ -59,8 +59,8 @@ namespace Api_GestionFC.Repository
                                     response.Progreso.SaldoVirtual = reader["SaldoVirtual"].ToString();
                                     response.Progreso.SaldoCantadoFCT = reader["SaldoCantadoFCT"].ToString();
                                     response.Progreso.SaldoAcumulado = reader["SaldoAcumulado"].ToString();
-                                    response.Progreso.PorcentajeSaldoAcumulado = Convert.ToDecimal(reader["PorcentajeSaldoAcumulado"]);
-                                    response.Progreso.PorcentajeSaldoVirtual = Convert.ToDecimal(reader["PorcentajeSaldoVirtual"]);
+                                    response.Progreso.PorcentajeSaldoAcumulado = reader["PorcentajeSaldoAcumulado"].ToString();
+                                    response.Progreso.PorcentajeSaldoVirtual = reader["PorcentajeSaldoVirtual"].ToString();
                                     response.Progreso.FCTInactivos = Convert.ToInt32(reader["FCTInactivos"]);
                                     response.Progreso.TramitesCertificados = Convert.ToInt32(reader["TramitesCertificados"]);
                                 }

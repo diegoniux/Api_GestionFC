@@ -15,8 +15,8 @@ namespace Api_GestionFC.Models
         public string SaldoVirtual { get; set; } 
         public string SaldoCantadoFCT { get; set; }
         public string SaldoAcumulado { get; set; }
-        public decimal PorcentajeSaldoAcumulado { get; set; }
-        public decimal PorcentajeSaldoVirtual { get; set; }
+        public string PorcentajeSaldoAcumulado { get; set; }
+        public string PorcentajeSaldoVirtual { get; set; }
         public int FCTInactivos { get; set; }
         public int TramitesCertificados { get; set; }
 

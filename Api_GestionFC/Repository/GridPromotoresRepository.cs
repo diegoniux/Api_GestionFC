@@ -35,7 +35,7 @@ namespace Api_GestionFC.Repository
             {
                 using (SqlConnection sqlConn = new SqlConnection(_connectionString))
                 {
-                    using (SqlCommand sqlCmd = new SqlCommand("GFC.Sps_Datos_Promotores", sqlConn))
+                    using (SqlCommand sqlCmd = new SqlCommand("GFC.Sps_Datos_Plantilla", sqlConn))
                     {
                         sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -66,8 +66,8 @@ namespace Api_GestionFC.Repository
                                         SaldoVirtual = reader["SaldoVirtual"].ToString(),
                                         SaldoCantadoFCT = reader["SaldoCantadoFCT"].ToString(),
                                         SaldoAcumulado = reader["SaldoAcumulado"].ToString(),
-                                        PorcentajeSaldoAcumulado = Convert.ToDecimal(reader["PorcentajeSaldoAcumulado"]),
-                                        PorcentajeSaldoVirtual = Convert.ToDecimal(reader["PorcentajeSaldoVirtual"]),
+                                        PorcentajeSaldoAcumulado = reader["PorcentajeSaldoAcumulado"].ToString(),
+                                        PorcentajeSaldoVirtual = reader["PorcentajeSaldoVirtual"].ToString(),
                                         FCTInactivos = Convert.ToInt32(reader["FCTInactivos"]),
                                         TramitesCertificados = Convert.ToInt32(reader["TramitesCertificados"])
                                     });
