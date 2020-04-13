@@ -59,7 +59,6 @@ namespace Api_GestionFC.Repository
         public LoginDTO LoginUser(LoginData loginData)
         {
             LoginDTO Response = new LoginDTO();
-            Usuario Usuario;
             try
             {
                 //Código para hacer el lógin del usuario
