@@ -1,36 +1,25 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.IdentityModel.Tokens.Jwt;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
-using DTO = Api_GestionFC.DTO;
 
 namespace Api_GestionFC.Repository
 {
 
-    public class GridPromotoresRepository
+    public class PlantillaRepository
     {
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
     
-        public GridPromotoresRepository(IConfiguration configuration)
+        public PlantillaRepository(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("AfiliacionDB");
             this._configuration = configuration;
         }
 
-        public async Task<DTO.GridPromotoresDTO> GetGridPromotores(int nomina)
+        public async Task<DTO.PromotoresDTO> GetPlantilla(int nomina)
         {
-            var response = new DTO.GridPromotoresDTO();
+            var response = new DTO.PromotoresDTO();
             try
             {
                 using (SqlConnection sqlConn = new SqlConnection(_connectionString))
