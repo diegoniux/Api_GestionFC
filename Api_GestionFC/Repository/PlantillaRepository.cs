@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace Api_GestionFC.Repository
@@ -52,14 +53,15 @@ namespace Api_GestionFC.Repository
                                         Foto = reader["Foto"].ToString(),
                                         Genero = reader["Genero"].ToString(),
                                         ColorIndicadorMeta = reader["ColorIndicadorMeta"].ToString(),
-                                        SaldoVirtual = reader["SaldoVirtual"].ToString(),
-                                        SaldoCantadoFCT = reader["SaldoCantadoFCT"].ToString(),
-                                        SaldoAcumulado = reader["SaldoAcumulado"].ToString(),
+                                        SaldoVirtual = Convert.ToDecimal(reader["SaldoVirtual"]).ToString("C"),
+                                        SaldoCantadoFCT = Convert.ToDecimal(reader["SaldoCantadoFCT"]).ToString("C"),
+                                        SaldoAcumulado = Convert.ToDecimal(reader["SaldoAcumulado"]).ToString("C"),
                                         PorcentajeSaldoAcumulado = reader["PorcentajeSaldoAcumulado"].ToString(),
                                         PorcentajeSaldoVirtual = reader["PorcentajeSaldoVirtual"].ToString(),
                                         FCTInactivos = Convert.ToInt32(reader["FCTInactivos"]),
-                                        TramitesCertificados = Convert.ToInt32(reader["TramitesCertificados"])
-                                    });
+                                        TramitesCertificados = Convert.ToInt32(reader["TramitesCertificados"]),
+                                        PorcentajeSaldoVirtualDesc = Convert.ToDecimal(reader["PorcentajeSaldoVirtual"]).ToString("P", CultureInfo.InvariantCulture)
+                                });
                                 }
                             }
                         }

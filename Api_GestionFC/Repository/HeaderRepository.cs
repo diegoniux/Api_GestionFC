@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using DTO = Api_GestionFC.DTO;
@@ -56,13 +57,14 @@ namespace Api_GestionFC.Repository
                                     response.Progreso.Foto = reader["Foto"].ToString();
                                     response.Progreso.Genero = reader["Genero"].ToString();
                                     response.Progreso.ColorIndicadorMeta = reader["ColorIndicadorMeta"].ToString();
-                                    response.Progreso.SaldoVirtual = reader["SaldoVirtual"].ToString();
-                                    response.Progreso.SaldoCantadoFCT = reader["SaldoCantadoFCT"].ToString();
-                                    response.Progreso.SaldoAcumulado = reader["SaldoAcumulado"].ToString();
+                                    response.Progreso.SaldoVirtual = Convert.ToDecimal(reader["SaldoVirtual"]).ToString("C");
+                                    response.Progreso.SaldoCantadoFCT = Convert.ToDecimal(reader["SaldoCantadoFCT"]).ToString("C");
+                                    response.Progreso.SaldoAcumulado = Convert.ToDecimal(reader["SaldoAcumulado"]).ToString("C");
                                     response.Progreso.PorcentajeSaldoAcumulado = reader["PorcentajeSaldoAcumulado"].ToString();
                                     response.Progreso.PorcentajeSaldoVirtual = reader["PorcentajeSaldoVirtual"].ToString();
                                     response.Progreso.FCTInactivos = Convert.ToInt32(reader["FCTInactivos"]);
                                     response.Progreso.TramitesCertificados = Convert.ToInt32(reader["TramitesCertificados"]);
+                                    response.Progreso.PorcentajeSaldoVirtualDesc = Convert.ToDecimal(reader["PorcentajeSaldoVirtual"]).ToString("P", CultureInfo.InvariantCulture);
                                 }
                             }
                         }
