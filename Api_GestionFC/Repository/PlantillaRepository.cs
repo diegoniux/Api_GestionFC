@@ -60,7 +60,7 @@ namespace Api_GestionFC.Repository
                                         PorcentajeSaldoVirtual = reader["PorcentajeSaldoVirtual"].ToString(),
                                         FCTInactivos = Convert.ToInt32(reader["FCTInactivos"]),
                                         TramitesCertificados = Convert.ToInt32(reader["TramitesCertificados"]),
-                                        PorcentajeSaldoVirtualDesc = Convert.ToDecimal(reader["PorcentajeSaldoVirtual"]).ToString("P", CultureInfo.InvariantCulture)
+                                        PorcentajeSaldoVirtualDesc = Convert.ToDecimal(reader["PorcentajeSaldoVirtual"]).ToString("0%")
                                 });
                                 }
                             }
