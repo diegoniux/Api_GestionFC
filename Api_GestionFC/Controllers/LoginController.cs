@@ -34,7 +34,6 @@ namespace Api_GestionFC.Controllers
             {
                 return new LoginDTO()
                 {
-                    Usuario = new Usuario(),
                     ResultadoEjecucion = new ResultadoEjecucion() { EjecucionCorrecta = false, ErrorMessage = ex.Message, FriendlyMessage = "Ocurrió un error" }
                 };
             }

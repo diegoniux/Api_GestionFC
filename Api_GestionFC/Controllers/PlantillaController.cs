@@ -1,32 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using DTO = Api_GestionFC.DTO;
-using Repository = Api_GestionFC.Repository;
 
 namespace Api_GestionFC.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     // [Authorize]
-    public class HeaderController : ControllerBase
+    public class PlantillaController : ControllerBase
     {
-        private readonly Repository.HeaderRepository _repository;
-        public HeaderController(Repository.HeaderRepository repository) 
-        {
+        private readonly Repository.PlantillaRepository _repository;
+
+        public PlantillaController(Repository.PlantillaRepository repository) {
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        [HttpGet("{nomina}")]        
-        public async Task<DTO.HeaderDTO> GetHeader(int nomina)
+        [HttpGet("{nomina}")]
+        public async Task<DTO.PromotoresDTO> Get(int nomina)
         {
-            var response = new DTO.HeaderDTO();
+            var response = new DTO.PromotoresDTO();
             try
-            {
-                response = await _repository.GetHeader(nomina);
+            { 
+                response = await _repository.GetPlantilla(nomina);
             }
             catch (Exception ex)
             {

@@ -32,7 +32,7 @@ namespace Api_GestionFC.Repository
             string Resultado = string.Empty;
             try
             {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://desaiis01/ICAP_AfiliacionServices_GFC/GerentesFC/GerentesFCService.svc/ObtieneDatosUsuario");
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(this._configuration.GetValue<string>("appSettings:AutenticarUsuario"));
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
                 httpWebRequest.Timeout = 600000;
@@ -62,43 +62,46 @@ namespace Api_GestionFC.Repository
             try
             {
                 //Código para hacer el lógin del usuario
-                string json = "{ \"nomina\": " + loginData.Nomina.ToString() + 
+                string json = "{ \"nomina\": " + loginData.Nomina.ToString() +
                                ", \"password\": \"" + loginData.Password + "\" }";
 
                 ObtieneDatosUsuarioJsonResponse jsonResult = JsonConvert.DeserializeObject<ObtieneDatosUsuarioJsonResponse>(EnvioPeticionRest(json));
 
-                Response.UsuarioAutorizado = jsonResult.ObtieneDatosUsuarioResult.Autorizado;
-                Response.Usuario = new Usuario()
+                Response.UsuarioAutorizado = jsonResult.AutenticarUsuarioResult.UsuarioAutorizado;
+                Response.EsGerente = jsonResult.AutenticarUsuarioResult.EsGerente;
+                Response.Activo = jsonResult.AutenticarUsuarioResult.Activo;
+                if (Response.UsuarioAutorizado && Response.EsGerente)
                 {
-                    Nomina = loginData.Nomina,
-                    NombreCompleto = jsonResult.ObtieneDatosUsuarioResult.NombreCompleto,
-                    Email = string.Empty
-                };
 
-                // authentication successful so generate jwt token
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_configuration["Secret"]);
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new Claim[]
+                    // authentication successful so generate jwt token
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var key = Encoding.ASCII.GetBytes(_configuration["Secret"]);
+                    var tokenDescriptor = new SecurityTokenDescriptor
                     {
-                        new Claim("userData", JsonConvert.SerializeObject(Response.Usuario) )
-                    }),
-                    Expires = DateTime.UtcNow.AddMinutes(1),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                };
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                Response.Token = tokenHandler.WriteToken(token);
-                Response.ResultadoEjecucion = new ResultadoEjecucion() 
-                { 
-                    EjecucionCorrecta = true, 
-                    ErrorMessage = null, 
-                    FriendlyMessage = null 
+                        Subject = new ClaimsIdentity(new Claim[]
+                        {
+                        new Claim("userData", JsonConvert.SerializeObject(new Usuario()
+                                                                            {
+                                                                                Nomina = loginData.Nomina,
+                                                                                NombreCompleto = string.Empty,
+                                                                                Email = string.Empty
+                                                                            }) )
+                        }),
+                        Expires = DateTime.UtcNow.AddMinutes(1),
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                    };
+                    var token = tokenHandler.CreateToken(tokenDescriptor);
+                    Response.Token = tokenHandler.WriteToken(token);
+                }
+                Response.ResultadoEjecucion = new ResultadoEjecucion()
+                {
+                    EjecucionCorrecta = true,
+                    ErrorMessage = null,
+                    FriendlyMessage = null
                 };
             }
             catch (Exception ex)
             {
-                Response.Usuario = null;
                 Response.ResultadoEjecucion = new ResultadoEjecucion() { EjecucionCorrecta = false, ErrorMessage = ex.Message, FriendlyMessage = "Ocurrió un error" };
                 Response.Token = null;
             }
@@ -107,12 +110,13 @@ namespace Api_GestionFC.Repository
 
         public class ObtieneDatosUsuarioResponse
         {
-            public string NombreCompleto { get; set; }
-            public bool Autorizado { get; set; }
+            public bool UsuarioAutorizado { get; set; }
+            public bool EsGerente { get; set; }
+            public bool Activo { get; set; }
         }
         public class ObtieneDatosUsuarioJsonResponse
         {
-            public ObtieneDatosUsuarioResponse ObtieneDatosUsuarioResult { get; set; }
+            public ObtieneDatosUsuarioResponse AutenticarUsuarioResult { get; set; }
         }
     }
 }
