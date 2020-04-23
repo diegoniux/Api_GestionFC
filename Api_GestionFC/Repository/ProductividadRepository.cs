@@ -13,7 +13,7 @@ namespace Api_GestionFC.Repository
 
         public ProductividadRepository(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("AfiliacionDB");
+            _connectionString = configuration.GetConnectionString("AfiliacionDBDEV");
             this._configuration = configuration;
         }
 

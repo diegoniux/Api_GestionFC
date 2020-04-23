@@ -19,9 +19,9 @@ namespace Api_GestionFC.Controllers
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        [HttpGet("GetProductividadDiaria/{nomina}")]
+        [HttpGet("GetProductividadDiaria/{nomina}/{Anio}/{SemanaAnio}")]
         //[AllowAnonymous]
-        public async Task<DTO.ProductividadDiariaDTO> GetProductividadDiaria(int nomina, [FromBody] int Anio, int SemanaAnio)
+        public async Task<DTO.ProductividadDiariaDTO> GetProductividadDiaria(int nomina, int Anio, int SemanaAnio)
         {
             var response = new DTO.ProductividadDiariaDTO();
             try
@@ -37,9 +37,9 @@ namespace Api_GestionFC.Controllers
             return response;
         }
 
-        [HttpGet("GetComisionEstimada/{nomina}")]
+        [HttpGet("GetComisionEstimada/{nomina}/{Fecha}")]
         //[AllowAnonymous]
-        public async Task<DTO.ComisionEstimadaDTO> GetComisionEstimada(int nomina, [FromBody] DateTime Fecha)
+        public async Task<DTO.ComisionEstimadaDTO> GetComisionEstimada(int nomina, DateTime Fecha)
         {
             var response = new DTO.ComisionEstimadaDTO();
             try
@@ -55,9 +55,9 @@ namespace Api_GestionFC.Controllers
             return response;
         }
         
-        [HttpGet("GetProductividadSemanal/{nomina}")]
+        [HttpGet("GetProductividadSemanal/{nomina}/{Anio}/{TetrasemanaAnio}")]
         //[AllowAnonymous]
-        public async Task<DTO.ProductividadSemanalDTO> GetProductividadSemanal(int nomina, [FromBody] int Anio, int TetrasemanaAnio)
+        public async Task<DTO.ProductividadSemanalDTO> GetProductividadSemanal(int nomina, int Anio, int TetrasemanaAnio)
         {
             var response = new DTO.ProductividadSemanalDTO();
             try

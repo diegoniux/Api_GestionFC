@@ -13,7 +13,7 @@ namespace Api_GestionFC.Models
         public string IndicadorSaldoMetaSem3 { get; set; }
         public string IndicadorSaldoMetaSem4 { get; set; }
         public int SaldoVirtualTetrasemana { get; set; }
-        public string IndicadorSaldoMetaTetra { get; set }
+        public string IndicadorSaldoMetaTetra { get; set; }
 
         public ProductividadSemanalDatos()
         {

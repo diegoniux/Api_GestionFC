@@ -55,7 +55,7 @@ namespace Api_GestionFC
             services.AddScoped<LogRepository>();
             services.AddScoped<HeaderRepository>();
             services.AddScoped<PlantillaRepository>();
-
+            services.AddScoped<ProductividadRepository>();
 
             services.AddControllers();
 
