@@ -29,8 +29,11 @@ namespace Api_GestionFC.Repository
                         sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                         sqlCmd.Parameters.AddWithValue("@p_Nomina", nomina);
-                        sqlCmd.Parameters.AddWithValue("@p_Anio", Anio);
-                        sqlCmd.Parameters.AddWithValue("@p_SemanaAnio", SemanaAnio);
+                        if (Anio > 0)
+                            sqlCmd.Parameters.AddWithValue("@p_Anio", Anio);
+                        if (SemanaAnio > 0)
+                            sqlCmd.Parameters.AddWithValue("@p_SemanaAnio", SemanaAnio);
+                        
                         await sqlConn.OpenAsync();
 
                         using (var reader = await sqlCmd.ExecuteReaderAsync())
@@ -110,7 +113,8 @@ namespace Api_GestionFC.Repository
                         sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                         sqlCmd.Parameters.AddWithValue("@p_Nomina", nomina);
-                        sqlCmd.Parameters.AddWithValue("@p_Fecha", Fecha);
+                        if (Fecha != new DateTime())
+                            sqlCmd.Parameters.AddWithValue("@p_Fecha", Fecha);
                         await sqlConn.OpenAsync();
 
                         using (var reader = await sqlCmd.ExecuteReaderAsync())
@@ -155,8 +159,10 @@ namespace Api_GestionFC.Repository
                         sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                         sqlCmd.Parameters.AddWithValue("@p_Nomina", nomina);
-                        sqlCmd.Parameters.AddWithValue("@p_Anio", Anio);
-                        sqlCmd.Parameters.AddWithValue("@p_TetrasemanaAnio", TetrasemanaAnio);
+                        if (Anio > 0)
+                            sqlCmd.Parameters.AddWithValue("@p_Anio", Anio);
+                        if (TetrasemanaAnio > 0)
+                            sqlCmd.Parameters.AddWithValue("@p_TetrasemanaAnio", TetrasemanaAnio);
                         await sqlConn.OpenAsync();
 
                         using (var reader = await sqlCmd.ExecuteReaderAsync())

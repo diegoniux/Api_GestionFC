@@ -21,7 +21,7 @@ namespace Api_GestionFC.Controllers
 
         [HttpGet("GetProductividadDiaria/{nomina}/{Anio}/{SemanaAnio}")]
         //[AllowAnonymous]
-        public async Task<DTO.ProductividadDiariaDTO> GetProductividadDiaria(int nomina, int Anio, int SemanaAnio)
+        public async Task<DTO.ProductividadDiariaDTO> GetProductividadDiaria(int nomina, int Anio = 0, int SemanaAnio = 0)
         {
             var response = new DTO.ProductividadDiariaDTO();
             try
@@ -39,7 +39,7 @@ namespace Api_GestionFC.Controllers
 
         [HttpGet("GetComisionEstimada/{nomina}/{Fecha}")]
         //[AllowAnonymous]
-        public async Task<DTO.ComisionEstimadaDTO> GetComisionEstimada(int nomina, DateTime Fecha)
+        public async Task<DTO.ComisionEstimadaDTO> GetComisionEstimada(int nomina, DateTime Fecha = new DateTime())
         {
             var response = new DTO.ComisionEstimadaDTO();
             try
@@ -57,7 +57,7 @@ namespace Api_GestionFC.Controllers
         
         [HttpGet("GetProductividadSemanal/{nomina}/{Anio}/{TetrasemanaAnio}")]
         //[AllowAnonymous]
-        public async Task<DTO.ProductividadSemanalDTO> GetProductividadSemanal(int nomina, int Anio, int TetrasemanaAnio)
+        public async Task<DTO.ProductividadSemanalDTO> GetProductividadSemanal(int nomina, int Anio = 0, int TetrasemanaAnio = 0)
         {
             var response = new DTO.ProductividadSemanalDTO();
             try
