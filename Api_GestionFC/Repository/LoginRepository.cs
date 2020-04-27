@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Api_GestionFC.Repository
 {
-    public class LoginRepository
+    public class LoginRepository : Comun
     {
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
@@ -27,34 +27,7 @@ namespace Api_GestionFC.Repository
             this._configuration = configuration;
         }
 
-        public string EnvioPeticionRest(string json)
-        {
-            string Resultado = string.Empty;
-            try
-            {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(this._configuration.GetValue<string>("appSettings:AutenticarUsuario"));
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "POST";
-                httpWebRequest.Timeout = 600000;
 
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                {
-                    streamWriter.Write(json);
-                }
-
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    Resultado = result.ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return Resultado;
-        }
 
         public LoginDTO LoginUser(LoginData loginData)
         {
@@ -65,7 +38,7 @@ namespace Api_GestionFC.Repository
                 string json = "{ \"nomina\": " + loginData.Nomina.ToString() +
                                ", \"password\": \"" + loginData.Password + "\" }";
 
-                ObtieneDatosUsuarioJsonResponse jsonResult = JsonConvert.DeserializeObject<ObtieneDatosUsuarioJsonResponse>(EnvioPeticionRest(json));
+                ObtieneDatosUsuarioJsonResponse jsonResult = JsonConvert.DeserializeObject<ObtieneDatosUsuarioJsonResponse>(EnvioPeticionRest(json, _configuration.GetValue<string>("appSettings:AutenticarUsuario")));
 
                 Response.UsuarioAutorizado = jsonResult.AutenticarUsuarioResult.UsuarioAutorizado;
                 Response.EsGerente = jsonResult.AutenticarUsuarioResult.EsGerente;

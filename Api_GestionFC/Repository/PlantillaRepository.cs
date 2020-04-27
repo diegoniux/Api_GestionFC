@@ -1,13 +1,15 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Api_GestionFC.Repository
 {
 
-    public class PlantillaRepository
+    public class PlantillaRepository : Comun
     {
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
@@ -16,23 +18,6 @@ namespace Api_GestionFC.Repository
         {
             _connectionString = configuration.GetConnectionString("AfiliacionDB");
             this._configuration = configuration;
-        }
-        private async Task<string> popo(string file) {
-            string response = string.Empty;
-            ws_DocumentosAfiliacion_FileToBase64.FileToBase64Client Client = new ws_DocumentosAfiliacion_FileToBase64.FileToBase64Client();
-            ws_DocumentosAfiliacion_FileToBase64.FileToBase64Request wsReq = new ws_DocumentosAfiliacion_FileToBase64.FileToBase64Request();
-            ws_DocumentosAfiliacion_FileToBase64.FileToBase64Response wsRes = new ws_DocumentosAfiliacion_FileToBase64.FileToBase64Response();
-            try
-            {
-                wsReq.filePath = file;
-                wsRes = await Client.fileToBase64Async(wsReq);
-                response = wsRes.base64String;
-            }
-            catch (Exception ex)
-            {
-
-            }
-            return response;
         }
 
         public async Task<DTO.PromotoresDTO> GetPlantilla(int nomina)
@@ -64,10 +49,12 @@ namespace Api_GestionFC.Repository
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
-                                    response.Promotores.Add(new Models.Progreso { 
+                                    string foto = reader["Foto"].ToString();
+                                    response.Promotores.Add(new Models.Progreso
+                                    {
                                         Nombre = reader["Nombre"].ToString(),
                                         Apellidos = reader["Apellidos"].ToString(),
-                                        Foto = reader["Foto"].ToString(),
+                                        Foto = foto == "capi_circulo.png" ? foto : obtieneFoto(foto, _configuration),
                                         Genero = reader["Genero"].ToString(),
                                         ColorIndicadorMeta = reader["ColorIndicadorMeta"].ToString(),
                                         SaldoVirtual = Convert.ToDecimal(reader["SaldoVirtual"]).ToString("C"),
@@ -78,7 +65,7 @@ namespace Api_GestionFC.Repository
                                         FCTInactivos = Convert.ToInt32(reader["FCTInactivos"]),
                                         TramitesCertificados = Convert.ToInt32(reader["TramitesCertificados"]),
                                         PorcentajeSaldoVirtualDesc = Convert.ToDecimal(reader["PorcentajeSaldoVirtual"]).ToString("0%")
-                                });
+                                    });
                                 }
                             }
                         }
