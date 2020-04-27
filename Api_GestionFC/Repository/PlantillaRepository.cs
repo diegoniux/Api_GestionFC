@@ -17,6 +17,23 @@ namespace Api_GestionFC.Repository
             _connectionString = configuration.GetConnectionString("AfiliacionDB");
             this._configuration = configuration;
         }
+        private async Task<string> popo(string file) {
+            string response = string.Empty;
+            ws_DocumentosAfiliacion_FileToBase64.FileToBase64Client Client = new ws_DocumentosAfiliacion_FileToBase64.FileToBase64Client();
+            ws_DocumentosAfiliacion_FileToBase64.FileToBase64Request wsReq = new ws_DocumentosAfiliacion_FileToBase64.FileToBase64Request();
+            ws_DocumentosAfiliacion_FileToBase64.FileToBase64Response wsRes = new ws_DocumentosAfiliacion_FileToBase64.FileToBase64Response();
+            try
+            {
+                wsReq.filePath = file;
+                wsRes = await Client.fileToBase64Async(wsReq);
+                response = wsRes.base64String;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return response;
+        }
 
         public async Task<DTO.PromotoresDTO> GetPlantilla(int nomina)
         {
