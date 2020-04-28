@@ -10,7 +10,7 @@ using Models = Api_GestionFC.Models;
 
 namespace Api_GestionFC.Repository
 {
-    public class HeaderRepository
+    public class HeaderRepository : Comun
     {
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
@@ -50,11 +50,12 @@ namespace Api_GestionFC.Repository
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
+                                    string foto = reader["Foto"].ToString();
                                     response.Plantilla = Convert.ToInt32(reader["Plantilla"]);
                                     response.APsMetaAlcanzada = Convert.ToInt32(reader["APsMetaAlcanzada"]);
                                     response.Progreso.Nombre = reader["Nombre"].ToString();
                                     response.Progreso.Apellidos = reader["Apellidos"].ToString();
-                                    response.Progreso.Foto = reader["Foto"].ToString();
+                                    response.Progreso.Foto = foto == "capi_circulo.png" ? foto : obtieneFoto(foto, _configuration);
                                     response.Progreso.Genero = reader["Genero"].ToString();
                                     response.Progreso.ColorIndicadorMeta = reader["ColorIndicadorMeta"].ToString();
                                     response.Progreso.SaldoVirtual = Convert.ToDecimal(reader["SaldoVirtual"]).ToString("C");

@@ -1,13 +1,15 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Api_GestionFC.Repository
 {
 
-    public class PlantillaRepository
+    public class PlantillaRepository : Comun
     {
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
@@ -47,10 +49,12 @@ namespace Api_GestionFC.Repository
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
-                                    response.Promotores.Add(new Models.Progreso { 
+                                    string foto = reader["Foto"].ToString();
+                                    response.Promotores.Add(new Models.Progreso
+                                    {
                                         Nombre = reader["Nombre"].ToString(),
                                         Apellidos = reader["Apellidos"].ToString(),
-                                        Foto = reader["Foto"].ToString(),
+                                        Foto = foto == "capi_circulo.png" ? foto : obtieneFoto(foto, _configuration),
                                         Genero = reader["Genero"].ToString(),
                                         ColorIndicadorMeta = reader["ColorIndicadorMeta"].ToString(),
                                         SaldoVirtual = Convert.ToDecimal(reader["SaldoVirtual"]).ToString("C"),
@@ -61,7 +65,7 @@ namespace Api_GestionFC.Repository
                                         FCTInactivos = Convert.ToInt32(reader["FCTInactivos"]),
                                         TramitesCertificados = Convert.ToInt32(reader["TramitesCertificados"]),
                                         PorcentajeSaldoVirtualDesc = Convert.ToDecimal(reader["PorcentajeSaldoVirtual"]).ToString("0%")
-                                });
+                                    });
                                 }
                             }
                         }
