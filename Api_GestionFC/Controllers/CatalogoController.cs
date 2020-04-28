@@ -8,10 +8,10 @@ namespace Api_GestionFC.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CatalogoContoller : ControllerBase
+    public class CatalogoController : ControllerBase
     {
         private readonly Repository.CatalogoRepository _repository;
-        public CatalogoContoller(Repository.CatalogoRepository repository)
+        public CatalogoController(Repository.CatalogoRepository repository)
         {
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
