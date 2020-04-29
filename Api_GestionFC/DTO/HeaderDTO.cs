@@ -11,6 +11,7 @@ namespace Api_GestionFC.DTO
         public Models.ResultadoEjecucion ResultadoEjecucion { get; set; }       
         public int Plantilla { get; set; }
         public int APsMetaAlcanzada { get; set; }
+        public string Perfil { get; set; }
         public Models.Progreso Progreso { get; set; }        
 
         public HeaderDTO() 

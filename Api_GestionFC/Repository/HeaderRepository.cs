@@ -51,6 +51,7 @@ namespace Api_GestionFC.Repository
                                 while (await reader.ReadAsync())
                                 {
                                     string foto = reader["Foto"].ToString();
+                                    response.Perfil = reader["Perfil"].ToString();
                                     response.Plantilla = Convert.ToInt32(reader["Plantilla"]);
                                     response.APsMetaAlcanzada = Convert.ToInt32(reader["APsMetaAlcanzada"]);
                                     response.Progreso.Nombre = reader["Nombre"].ToString();
