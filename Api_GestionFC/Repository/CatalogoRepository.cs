@@ -15,7 +15,7 @@ namespace Api_GestionFC.Repository
 
         public CatalogoRepository(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("AfiliacionDBDEV");
+            _connectionString = configuration.GetConnectionString("AfiliacionDB");
             this._configuration = configuration;
         }
 
