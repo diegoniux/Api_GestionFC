@@ -9,7 +9,7 @@ namespace Api_GestionFC.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    // [Authorize]
+    [Authorize]
     public class ProductividadController
     {
         private readonly Repository.ProductividadRepository _repository;
@@ -20,7 +20,6 @@ namespace Api_GestionFC.Controllers
         }
 
         [HttpGet("GetProductividadDiaria/{nomina}/{Anio}/{SemanaAnio}")]
-        //[AllowAnonymous]
         public async Task<DTO.ProductividadDiariaDTO> GetProductividadDiaria(int nomina, int Anio = 0, int SemanaAnio = 0)
         {
             var response = new DTO.ProductividadDiariaDTO();
@@ -38,7 +37,6 @@ namespace Api_GestionFC.Controllers
         }
 
         [HttpGet("GetComisionEstimada/{nomina}/{Fecha}")]
-        //[AllowAnonymous]
         public async Task<DTO.ComisionEstimadaDTO> GetComisionEstimada(int nomina, DateTime Fecha = new DateTime())
         {
             var response = new DTO.ComisionEstimadaDTO();
@@ -56,7 +54,6 @@ namespace Api_GestionFC.Controllers
         }
         
         [HttpGet("GetProductividadSemanal/{nomina}/{Anio}/{TetrasemanaAnio}")]
-        //[AllowAnonymous]
         public async Task<DTO.ProductividadSemanalDTO> GetProductividadSemanal(int nomina, int Anio = 0, int TetrasemanaAnio = 0)
         {
             var response = new DTO.ProductividadSemanalDTO();

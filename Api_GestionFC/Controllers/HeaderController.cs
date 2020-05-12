@@ -11,7 +11,7 @@ namespace Api_GestionFC.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    // [Authorize]
+    [Authorize]
     public class HeaderController : ControllerBase
     {
         private readonly Repository.HeaderRepository _repository;

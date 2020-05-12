@@ -24,7 +24,6 @@ namespace Api_GestionFC.Controllers
 
         [HttpPost]
         [Route("SetLogSistema")]
-        [AllowAnonymous]
         public async Task<LogSistemaDTO> SetLogSistema([FromBody] LogSistema logSistema)
         {
             try
