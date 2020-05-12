@@ -51,7 +51,6 @@ namespace Api_GestionFC.Repository
                                 while (await reader.ReadAsync())
                                 {
                                     string foto = reader["Foto"].ToString();
-                                    response.Perfil = reader["Perfil"].ToString();
                                     response.Plantilla = Convert.ToInt32(reader["Plantilla"]);
                                     response.APsMetaAlcanzada = Convert.ToInt32(reader["APsMetaAlcanzada"]);
                                     response.Progreso.Nombre = reader["Nombre"].ToString();
@@ -66,7 +65,8 @@ namespace Api_GestionFC.Repository
                                     response.Progreso.PorcentajeSaldoVirtual = reader["PorcentajeSaldoVirtual"].ToString();
                                     response.Progreso.FCTInactivos = Convert.ToInt32(reader["FCTInactivos"]);
                                     response.Progreso.TramitesCertificados = Convert.ToInt32(reader["TramitesCertificados"]);
-                                    response.Progreso.PorcentajeSaldoVirtualDesc = Convert.ToDecimal(reader["PorcentajeSaldoVirtual"]).ToString("0%");
+                                    response.Progreso.PorcentajeSaldoVirtualDesc = Convert.ToDecimal(reader["PorcentajeSaldoVirtual"]).ToString();
+                                    response.Perfil = reader["Perfil"].ToString();
                                 }
                             }
                         }

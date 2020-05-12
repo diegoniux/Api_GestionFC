@@ -20,6 +20,6 @@ namespace Api_GestionFC.Models
         public string PorcentajeSaldoVirtualDesc { get; set; }
         public int FCTInactivos { get; set; }
         public int TramitesCertificados { get; set; }
-
+        public string Perfil { get; set; }
     }
 }

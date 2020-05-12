@@ -55,14 +55,14 @@ namespace Api_GestionFC.Controllers
             return response;
         }
         
-        [HttpGet("GetProductividadSemanal/{nomina}/{Anio}/{TetrasemanaAnio}")]
+        [HttpGet("GetProductividadSemanal/{nomina}/{Anio}/{TetrasemanaAnio}/{FechaCorte}/{EsPosterior}")]
         //[AllowAnonymous]
-        public async Task<DTO.ProductividadSemanalDTO> GetProductividadSemanal(int nomina, int Anio = 0, int TetrasemanaAnio = 0)
+        public async Task<DTO.ProductividadSemanalDTO> GetProductividadSemanal(int nomina, int Anio = 0, int TetrasemanaAnio = 0, DateTime? FechaCorte = null, bool? EsPosterior = false)
         {
             var response = new DTO.ProductividadSemanalDTO();
             try
             {
-                response = await _repository.GetProductividadSemanal(nomina, Anio, TetrasemanaAnio);
+                response = await _repository.GetProductividadSemanal(nomina, Anio, TetrasemanaAnio, FechaCorte, EsPosterior);
             }
             catch (Exception ex)
             {
