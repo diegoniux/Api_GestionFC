@@ -163,9 +163,12 @@ namespace Api_GestionFC.Repository
                             sqlCmd.Parameters.AddWithValue("@p_Anio", Anio);
                         if (TetrasemanaAnio > 0)
                             sqlCmd.Parameters.AddWithValue("@p_TetrasemanaAnio", TetrasemanaAnio);
-                        if (FechaCorte.HasValue)
+                        if (FechaCorte != Convert.ToDateTime("1900-01-01"))
+                        {
                             sqlCmd.Parameters.AddWithValue("@p_FechaCorte", FechaCorte);
-                        sqlCmd.Parameters.AddWithValue("@p_EsPosterior", EsPosterior);
+                            sqlCmd.Parameters.AddWithValue("@p_EsPosterior", EsPosterior);
+                        }
+                        
                         await sqlConn.OpenAsync();
 
                         using (var reader = await sqlCmd.ExecuteReaderAsync())
