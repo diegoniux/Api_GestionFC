@@ -12,7 +12,6 @@ namespace Api_GestionFC.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class LogController : ControllerBase
     {
         private readonly LogRepository _repository;
@@ -42,7 +41,6 @@ namespace Api_GestionFC.Controllers
 
         [HttpPost]
         [Route("SetLogError")]
-        [AllowAnonymous]
         public async Task<LogErrorDTO> SetLogError([FromBody] LogError logError)
         {
             try
