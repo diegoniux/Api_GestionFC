@@ -73,7 +73,7 @@ namespace Api_GestionFC.Repository
                                                                             }) )
                         }),
                         NotBefore = now,
-                        Expires = now.AddMinutes(1),
+                        Expires = now.AddHours(8),
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                     };
                     var token = tokenHandler.CreateToken(tokenDescriptor);
