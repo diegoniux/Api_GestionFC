@@ -2,6 +2,7 @@
 using Api_GestionFC.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
@@ -58,6 +59,8 @@ namespace Api_GestionFC.Repository
                     // authentication successful so generate jwt token
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var key = Encoding.ASCII.GetBytes(_configuration["Secret"]);
+                    var now = DateTime.Now;
+                    IdentityModelEventSource.ShowPII = true;
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {
                         Subject = new ClaimsIdentity(new Claim[]
@@ -69,7 +72,8 @@ namespace Api_GestionFC.Repository
                                                                                 Email = string.Empty
                                                                             }) )
                         }),
-                        Expires = DateTime.UtcNow.AddMinutes(1),
+                        NotBefore = now,
+                        Expires = now.AddMinutes(1),
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                     };
                     var token = tokenHandler.CreateToken(tokenDescriptor);
