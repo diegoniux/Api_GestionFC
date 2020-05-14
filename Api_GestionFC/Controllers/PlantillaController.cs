@@ -7,7 +7,6 @@ namespace Api_GestionFC.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class PlantillaController : ControllerBase
     {
         private readonly Repository.PlantillaRepository _repository;

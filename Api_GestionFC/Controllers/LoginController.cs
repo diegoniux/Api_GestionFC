@@ -12,7 +12,6 @@ namespace Api_GestionFC.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class LoginController: ControllerBase
     {
         private readonly LoginRepository _repository;
@@ -23,7 +22,6 @@ namespace Api_GestionFC.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public LoginDTO LoginUser(LoginData loginData)
         {
             try

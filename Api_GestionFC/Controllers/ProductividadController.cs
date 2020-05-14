@@ -9,7 +9,6 @@ namespace Api_GestionFC.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class ProductividadController
     {
         private readonly Repository.ProductividadRepository _repository;
