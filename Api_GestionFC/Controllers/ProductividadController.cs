@@ -18,13 +18,13 @@ namespace Api_GestionFC.Controllers
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        [HttpGet("GetProductividadDiaria/{nomina}/{Anio}/{SemanaAnio}")]
-        public async Task<DTO.ProductividadDiariaDTO> GetProductividadDiaria(int nomina, int Anio = 0, int SemanaAnio = 0)
+        [HttpGet("GetProductividadDiaria/{nomina}/{Anio}/{SemanaAnio}/{FechaCorte}/{EsPosterior}")]
+        public async Task<DTO.ProductividadDiariaDTO> GetProductividadDiaria(int nomina, int Anio = 0, int SemanaAnio = 0, DateTime? FechaCorte = null, bool? EsPosterior = false)
         {
             var response = new DTO.ProductividadDiariaDTO();
             try
             {
-                response = await _repository.GetProductividadDiaria(nomina, Anio, SemanaAnio);
+                response = await _repository.GetProductividadDiaria(nomina, Anio, SemanaAnio, FechaCorte, EsPosterior);
             }
             catch (Exception ex)
             {

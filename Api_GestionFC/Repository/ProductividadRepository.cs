@@ -17,7 +17,7 @@ namespace Api_GestionFC.Repository
             this._configuration = configuration;
         }
 
-        public async Task<DTO.ProductividadDiariaDTO> GetProductividadDiaria(int nomina, int Anio, int SemanaAnio)
+        public async Task<DTO.ProductividadDiariaDTO> GetProductividadDiaria(int nomina, int Anio, int SemanaAnio, DateTime? FechaCorte, bool? EsPosterior = false)
         {
             var response = new DTO.ProductividadDiariaDTO();
             try
@@ -33,7 +33,12 @@ namespace Api_GestionFC.Repository
                             sqlCmd.Parameters.AddWithValue("@p_Anio", Anio);
                         if (SemanaAnio > 0)
                             sqlCmd.Parameters.AddWithValue("@p_SemanaAnio", SemanaAnio);
-                        
+                        if (FechaCorte != Convert.ToDateTime("1900-01-01"))
+                        {
+                            sqlCmd.Parameters.AddWithValue("@p_FechaCorte", FechaCorte);
+                            sqlCmd.Parameters.AddWithValue("@p_EsPosterior", EsPosterior);
+                        }
+
                         await sqlConn.OpenAsync();
 
                         using (var reader = await sqlCmd.ExecuteReaderAsync())
@@ -88,6 +93,8 @@ namespace Api_GestionFC.Repository
                                     response.ResultAnioSemana.Anio = Convert.ToInt32(reader["Anio"]);
                                     response.ResultAnioSemana.EsActual = Convert.ToBoolean(reader["EsActual"]);
                                     response.ResultAnioSemana.SemanaAnio = Convert.ToInt32(reader["SemanaAnio"]);
+                                    response.ResultAnioSemana.FechaCorte = Convert.ToDateTime(reader["FechaCorte"]);
+                                    response.ResultAnioSemana.EsUltimaFechaCorte = Convert.ToBoolean(reader["EsUltimaFechaCorte"]);
                                 }
                             }
                         }
