@@ -219,6 +219,7 @@ namespace Api_GestionFC.Repository
                                     response.ResultTotal.TetrasemanaAnio = Convert.ToInt32(reader["TetrasemanaAnio"]);
                                     response.ResultTotal.EsActual = Convert.ToBoolean(reader["EsActual"]);
                                     response.ResultTotal.FechaCorte = Convert.ToDateTime(reader["FechaCorte"]);
+                                    response.ResultTotal.EsUltimaFechaCorte = Convert.ToBoolean(reader["EsUltimaFechaCorte"]);
                                 }
                             }
                         }

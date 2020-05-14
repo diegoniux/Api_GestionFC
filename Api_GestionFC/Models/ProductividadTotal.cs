@@ -8,6 +8,7 @@ namespace Api_GestionFC.Models
         public int TetrasemanaAnio { get; set; }
         public bool EsActual { get; set; }
         public DateTime FechaCorte { get; set; }
+        public bool EsUltimaFechaCorte { get; set; }
 
         public ProductividadTotal()
         {
