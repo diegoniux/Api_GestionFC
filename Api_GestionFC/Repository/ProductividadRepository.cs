@@ -67,16 +67,23 @@ namespace Api_GestionFC.Repository
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
+                                    string SaldoVirtualLunes = reader["SaldoVirtualLunes"].ToString();
+                                    string SaldoVirtualMartes = reader["SaldoVirtualMartes"].ToString();
+                                    string SaldoVirtualMiercoles = reader["SaldoVirtualMiercoles"].ToString();
+                                    string SaldoVirtualJueves = reader["SaldoVirtualJueves"].ToString();
+                                    string SaldoVirtualViernes = reader["SaldoVirtualViernes"].ToString();
+                                    string SaldoVirtualSabado = reader["SaldoVirtualSabado"].ToString();
+                                    string SaldoVirtualDomingo = reader["SaldoVirtualDomingo"].ToString();
                                     response.ResultDatos.Add(new Models.ProductividadDiariaDatos
                                     {
                                         NombreCompletoAP = reader["NombreCompletoAP"].ToString(),
-                                        SaldoVirtualLunes = Convert.ToInt32(reader["SaldoVirtualLunes"]),
-                                        SaldoVirtualMartes = Convert.ToInt32(reader["SaldoVirtualMartes"]),
-                                        SaldoVirtualMiercoles = Convert.ToInt32(reader["SaldoVirtualMiercoles"]),
-                                        SaldoVirtualJueves = Convert.ToInt32(reader["SaldoVirtualJueves"]),
-                                        SaldoVirtualViernes = Convert.ToInt32(reader["SaldoVirtualViernes"]),
-                                        SaldoVirtualSabado = Convert.ToInt32(reader["SaldoVirtualSabado"]),
-                                        SaldoVirtualDomingo = Convert.ToInt32(reader["SaldoVirtualDomingo"]),
+                                        SaldoVirtualLunes = SaldoVirtualLunes == "0" ? "-" : SaldoVirtualLunes,
+                                        SaldoVirtualMartes = SaldoVirtualMartes == "0" ? "-" : SaldoVirtualMartes,
+                                        SaldoVirtualMiercoles = SaldoVirtualMiercoles == "0" ? "-" : SaldoVirtualMiercoles,
+                                        SaldoVirtualJueves = SaldoVirtualJueves == "0" ? "-" : SaldoVirtualJueves,
+                                        SaldoVirtualViernes = SaldoVirtualViernes == "0" ? "-" : SaldoVirtualViernes,
+                                        SaldoVirtualSabado = SaldoVirtualSabado == "0" ? "-" : SaldoVirtualSabado,
+                                        SaldoVirtualDomingo = SaldoVirtualDomingo == "0" ? "-" : SaldoVirtualDomingo,
                                         SaldoVirtualSemana = Convert.ToInt32(reader["SaldoVirtualSemana"]),
                                         IndicadorSaldoMeta = reader["IndicadorSaldoMeta"].ToString(),
                                         SaldoVirtualFaltante = Convert.ToInt32(reader["SaldoVirtualFaltante"]),
@@ -202,13 +209,18 @@ namespace Api_GestionFC.Repository
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
+                                    string SaldoVirtualSemana1 = reader["SaldoVirtualSemana1"].ToString();
+                                    string SaldoVirtualSemana2 = reader["SaldoVirtualSemana2"].ToString();
+                                    string SaldoVirtualSemana3 = reader["SaldoVirtualSemana3"].ToString();
+                                    string SaldoVirtualSemana4 = reader["SaldoVirtualSemana4"].ToString();
+
                                     response.ResultDatos.Add(new Models.ProductividadSemanalDatos
                                     {
                                         NombreCompletoAP = reader["NombreCompletoAP"].ToString(),
-                                        SaldoVirtualSemana1 = Convert.ToInt32(reader["SaldoVirtualSemana1"]),
-                                        SaldoVirtualSemana2 = Convert.ToInt32(reader["SaldoVirtualSemana2"]),
-                                        SaldoVirtualSemana3 = Convert.ToInt32(reader["SaldoVirtualSemana3"]),
-                                        SaldoVirtualSemana4 = Convert.ToInt32(reader["SaldoVirtualSemana4"]),
+                                        SaldoVirtualSemana1 = SaldoVirtualSemana1 == "0" ? "-" : SaldoVirtualSemana1,
+                                        SaldoVirtualSemana2 = SaldoVirtualSemana2 == "0" ? "-" : SaldoVirtualSemana2,
+                                        SaldoVirtualSemana3 = SaldoVirtualSemana3 == "0" ? "-" : SaldoVirtualSemana3,
+                                        SaldoVirtualSemana4 = SaldoVirtualSemana4 == "0" ? "-" : SaldoVirtualSemana4,
                                         IndicadorSaldoMetaSem1 = reader["IndicadorSaldoMetaSem1"].ToString(),
                                         IndicadorSaldoMetaSem2 = reader["IndicadorSaldoMetaSem2"].ToString(),
                                         IndicadorSaldoMetaSem3 = reader["IndicadorSaldoMetaSem3"].ToString(),
@@ -227,6 +239,14 @@ namespace Api_GestionFC.Repository
                                     response.ResultTotal.EsActual = Convert.ToBoolean(reader["EsActual"]);
                                     response.ResultTotal.FechaCorte = Convert.ToDateTime(reader["FechaCorte"]);
                                     response.ResultTotal.EsUltimaFechaCorte = Convert.ToBoolean(reader["EsUltimaFechaCorte"]);
+                                }
+                                reader.NextResult();
+                                while (await reader.ReadAsync())
+                                {
+                                    response.ResultSemanasTotal.Semana1Total = Convert.ToInt32(reader["Semana1Total"]);
+                                    response.ResultSemanasTotal.Semana2Total = Convert.ToInt32(reader["Semana2Total"]);
+                                    response.ResultSemanasTotal.Semana3Total = Convert.ToInt32(reader["Semana3Total"]);
+                                    response.ResultSemanasTotal.Semana4Total = Convert.ToInt32(reader["Semana4Total"]);
                                 }
                             }
                         }
