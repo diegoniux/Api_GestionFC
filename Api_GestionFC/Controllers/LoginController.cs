@@ -36,5 +36,23 @@ namespace Api_GestionFC.Controllers
                 };
             }
         }
+
+        [HttpPost]
+        [Route("LDAP")]
+        public LoginDTO LDAPLoginUser(LDAPLoginData loginData)
+        {
+            try
+            {
+                return _repository.LoginLDAP(loginData);
+            }
+            catch (Exception ex)
+            {
+                return new LoginDTO()
+                {
+                    ResultadoEjecucion = new ResultadoEjecucion() { EjecucionCorrecta = false, ErrorMessage = ex.Message, FriendlyMessage = "Ocurrió un error" }
+                };
+            }
+        }
+
     }
 }

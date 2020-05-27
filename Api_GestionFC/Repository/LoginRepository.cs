@@ -1,10 +1,14 @@
 ﻿using Api_GestionFC.DTO;
 using Api_GestionFC.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
+using System.DirectoryServices;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -16,10 +20,16 @@ namespace Api_GestionFC.Repository
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
 
-        public LoginRepository(IConfiguration configuration)
+        private const string DisplayNameAttribute = "DisplayName";
+        private const string SAMAccountNameAttribute = "SAMAccountName";
+
+        private readonly LDAP LdapConf;
+
+        public LoginRepository(IConfiguration configuration, IOptions<LDAP> ldapConf)
         {
             _connectionString = configuration.GetConnectionString("AfiliacionDB");
             this._configuration = configuration;
+            this.LdapConf = ldapConf.Value;
         }
 
 
@@ -79,6 +89,51 @@ namespace Api_GestionFC.Repository
                     ErrorMessage = null,
                     FriendlyMessage = null
                 };
+            }
+            catch (Exception ex)
+            {
+                Response.ResultadoEjecucion = new ResultadoEjecucion() { EjecucionCorrecta = false, ErrorMessage = ex.Message, FriendlyMessage = "Ocurrió un error" };
+                Response.Token = null;
+            }
+            return Response;
+        }
+
+        public LoginDTO LoginLDAP(LDAPLoginData loginData)
+        {
+            LoginDTO Response = new LoginDTO();
+            try
+            {
+                string user = LdapConf.Domain + "\\" + loginData.Usuario;
+                using (DirectoryEntry entry = new DirectoryEntry(LdapConf.KLDAPService, user , loginData.Password))
+                {
+                    string defaultNamingContext = entry.Properties["defaultNamingContext"].Value.ToString();
+                    using (DirectoryEntry defaultEntry = new DirectoryEntry("LDAP://" + defaultNamingContext))
+                    {
+                        using (DirectorySearcher searcher = new DirectorySearcher(defaultEntry))
+                        {
+                            searcher.Filter = String.Format("({0}={1})", SAMAccountNameAttribute, loginData.Usuario);
+                            searcher.PropertiesToLoad.Add(DisplayNameAttribute);
+                            searcher.PropertiesToLoad.Add(SAMAccountNameAttribute);
+                            var result = searcher.FindOne();
+                            if (result != null)
+                            {
+                                var displayName = result.Properties[DisplayNameAttribute];
+                                var samAccountName = result.Properties[SAMAccountNameAttribute];
+
+                                Response.Activo = true;
+                                Response.EsGerente = true;
+                                Response.ResultadoEjecucion = new ResultadoEjecucion()
+                                {
+                                    EjecucionCorrecta = true,
+                                    ErrorMessage = "",
+                                    FriendlyMessage = ""
+                                };
+                                Response.UsuarioAutorizado = true;
+                                Response.Token = "";
+                            }
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
