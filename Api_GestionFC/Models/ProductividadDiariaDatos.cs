@@ -4,13 +4,13 @@ namespace Api_GestionFC.Models
     public class ProductividadDiariaDatos
     {
         public string NombreCompletoAP { get; set; }
-        public int SaldoVirtualLunes { get; set; }
-        public int SaldoVirtualMartes { get; set; }
-        public int SaldoVirtualMiercoles { get; set; }
-        public int SaldoVirtualJueves { get; set; }
-        public int SaldoVirtualViernes { get; set; }
-        public int SaldoVirtualSabado { get; set; }
-        public int SaldoVirtualDomingo { get; set; }
+        public string SaldoVirtualLunes { get; set; }
+        public string SaldoVirtualMartes { get; set; }
+        public string SaldoVirtualMiercoles { get; set; }
+        public string SaldoVirtualJueves { get; set; }
+        public string SaldoVirtualViernes { get; set; }
+        public string SaldoVirtualSabado { get; set; }
+        public string SaldoVirtualDomingo { get; set; }
         public int SaldoVirtualSemana { get; set; }
         public string IndicadorSaldoMeta { get; set; }
         public int SaldoVirtualFaltante { get; set; }

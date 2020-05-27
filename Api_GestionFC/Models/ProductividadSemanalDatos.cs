@@ -4,10 +4,10 @@ namespace Api_GestionFC.Models
     public class ProductividadSemanalDatos
     {
         public string NombreCompletoAP { get; set; }
-        public int SaldoVirtualSemana1 { get; set; }
-        public int SaldoVirtualSemana2 { get; set; }
-        public int SaldoVirtualSemana3 { get; set; }
-        public int SaldoVirtualSemana4 { get; set; }
+        public string SaldoVirtualSemana1 { get; set; }
+        public string SaldoVirtualSemana2 { get; set; }
+        public string SaldoVirtualSemana3 { get; set; }
+        public string SaldoVirtualSemana4 { get; set; }
         public string IndicadorSaldoMetaSem1 { get; set; }
         public string IndicadorSaldoMetaSem2 { get; set; }
         public string IndicadorSaldoMetaSem3 { get; set; }
