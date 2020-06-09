@@ -58,9 +58,9 @@ namespace Api_GestionFC.Repository
                                     response.Progreso.Foto = foto == "capi_circulo.png" ? foto : obtieneFoto(foto, _configuration);
                                     response.Progreso.Genero = reader["Genero"].ToString();
                                     response.Progreso.ColorIndicadorMeta = reader["ColorIndicadorMeta"].ToString();
-                                    response.Progreso.SaldoVirtual = Convert.ToDecimal(reader["SaldoVirtual"]).ToString("C");
-                                    response.Progreso.SaldoCantadoFCT = Convert.ToDecimal(reader["SaldoCantadoFCT"]).ToString("C");
-                                    response.Progreso.SaldoAcumulado = Convert.ToDecimal(reader["SaldoAcumulado"]).ToString("C");
+                                    response.Progreso.SaldoVirtual = Convert.ToDecimal(reader["SaldoVirtual"]).ToString("C0");
+                                    response.Progreso.SaldoCantadoFCT = Convert.ToDecimal(reader["SaldoCantadoFCT"]).ToString("C0");
+                                    response.Progreso.SaldoAcumulado = Convert.ToDecimal(reader["SaldoAcumulado"]).ToString("C0");
                                     response.Progreso.PorcentajeSaldoAcumulado = reader["PorcentajeSaldoAcumulado"].ToString();
                                     response.Progreso.PorcentajeSaldoVirtual = reader["PorcentajeSaldoVirtual"].ToString();
                                     response.Progreso.FCTInactivos = Convert.ToInt32(reader["FCTInactivos"]);
