@@ -38,6 +38,7 @@ namespace Api_GestionFC
             services.AddScoped<PlantillaRepository>();
             services.AddScoped<ProductividadRepository>();
             services.AddScoped<CatalogoRepository>();
+            services.AddScoped<RankingRepository>();
 
             services.AddControllers();
 
