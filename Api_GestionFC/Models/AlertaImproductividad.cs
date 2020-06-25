@@ -14,7 +14,12 @@ namespace Api_GestionFC.Models
         public int IdEstatusAlerta { get; set; }
         public int NominaAP { get; set; }
         public string NombreAP { get; set; }
-        public string ApellidoAP { get; set; }
+        public string ApellidosAP { get; set; }
+        public int DiasSinFolios { get; set; }
+        public int DiasRestantes { get; set; }
+        public string Msj1 { get; set; }
+        public string Msj2 { get; set; }
+        public string Msj3 { get; set; }
 
         public AlertaImproductividad()
         {

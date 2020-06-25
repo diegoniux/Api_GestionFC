@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Api_GestionFC.Repository
 {
-    public class AlertaRepository
+    public class AlertaRepository : Comun
     {
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
@@ -45,6 +45,7 @@ namespace Api_GestionFC.Repository
                             //Si la ejecución es exitosa                                 
                             if (response.ResultadoEjecucion.EjecucionCorrecta)
                             {
+                                string foto;
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
@@ -53,15 +54,22 @@ namespace Api_GestionFC.Repository
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
+                                    foto = reader["Foto"].ToString();
                                     response.ResultDatos.Add(new Models.AlertaImproductividad
                                     {
-                                        Foto = reader["Foto"].ToString(),
                                         IdAlerta = Convert.ToInt32(reader["IdAlerta"]),
                                         IdTipoAlerta = Convert.ToInt32(reader["IdTipoAlerta"]),
                                         IdEstatusAlerta = Convert.ToInt32(reader["IdEstatusAlerta"]),
                                         NominaAP = Convert.ToInt32(reader["NominaAP"]),
                                         NombreAP = reader["NombreAP"].ToString(),
-                                        ApellidoAP  = reader["ApellidoAP"].ToString()
+                                        ApellidosAP  = reader["ApellidosAP"].ToString(),
+                                        DiasSinFolios = Convert.ToInt32(reader["DiasSinFolios"]),
+                                        DiasRestantes = Convert.ToInt32(reader["DiasRestantes"]),
+                                        Msj1 = reader["Msj1"].ToString(),
+                                        Msj2 = reader["Msj2"].ToString(),
+                                        Msj3 = reader["Msj3"].ToString(),
+                                        //Foto = foto == "capi_circulo.png" ? foto : obtieneFoto(foto, _configuration),
+                                        Foto = "capi_circulo.png"
                                     });
                                 }
                             }
