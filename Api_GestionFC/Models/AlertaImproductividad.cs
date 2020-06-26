@@ -20,6 +20,11 @@ namespace Api_GestionFC.Models
         public string Msj1 { get; set; }
         public string Msj2 { get; set; }
         public string Msj3 { get; set; }
+        public bool BanderaCalendar { get; set; }
+        public string ColorCalendar { get; set; }
+        public string MsjEstatus { get; set; }
+        public string ImgNotificacion { get; set; }
+        public bool ImgWarning { get; set; }
 
         public AlertaImproductividad()
         {

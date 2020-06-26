@@ -57,6 +57,7 @@ namespace Api_GestionFC.Repository
                                     foto = reader["Foto"].ToString();
                                     response.ResultDatos.Add(new Models.AlertaImproductividad
                                     {
+                                        Foto = foto == "capi_circulo.png" ? foto : obtieneFoto(foto, _configuration),
                                         IdAlerta = Convert.ToInt32(reader["IdAlerta"]),
                                         IdTipoAlerta = Convert.ToInt32(reader["IdTipoAlerta"]),
                                         IdEstatusAlerta = Convert.ToInt32(reader["IdEstatusAlerta"]),
@@ -68,8 +69,11 @@ namespace Api_GestionFC.Repository
                                         Msj1 = reader["Msj1"].ToString(),
                                         Msj2 = reader["Msj2"].ToString(),
                                         Msj3 = reader["Msj3"].ToString(),
-                                        //Foto = foto == "capi_circulo.png" ? foto : obtieneFoto(foto, _configuration),
-                                        Foto = "capi_circulo.png"
+                                        BanderaCalendar = Convert.ToBoolean(reader["BanderaCalendar"]),
+                                        ColorCalendar = reader["ColorCalendar"].ToString(),
+                                        MsjEstatus = reader["MsjEstatus"].ToString(),
+                                        ImgNotificacion = reader["ImgNotificacion"].ToString(),
+                                        ImgWarning = Convert.ToBoolean(reader["ImgWarning"])
                                     });
                                 }
                             }
