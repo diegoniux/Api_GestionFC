@@ -15,7 +15,7 @@ namespace Api_GestionFC.Repository
 
         public RankingRepository(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("AfiliacionDBDEV");
+            _connectionString = configuration.GetConnectionString("AfiliacionDB");
             this._configuration = configuration;
         }
         public async Task<DTO.RankingDTO> GetRanking(int nomina)
