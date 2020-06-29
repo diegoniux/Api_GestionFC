@@ -13,7 +13,7 @@ namespace Api_GestionFC.DTO
         public String ComisionEstimada { get; set; }
         public MetaAP MetaAP { get; set; }
 
-        public MetaPlantillaIndividual()
+        public MetaPlantillaIndividualDTO()
         {
             this.ResultadoEjecucion = new ResultadoEjecucion();
             this.ComisionEstimada = "$0";
