@@ -40,6 +40,7 @@ namespace Api_GestionFC
             services.AddScoped<CatalogoRepository>();
             services.AddScoped<RankingRepository>();
             services.AddScoped<AlertaRepository>();
+            services.AddScoped<VisionBoardRepository>();
 
             services.AddControllers();
 
