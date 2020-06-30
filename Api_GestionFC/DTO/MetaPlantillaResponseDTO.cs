@@ -11,5 +11,13 @@ namespace Api_GestionFC.DTO
         public ResultadoEjecucion ResultadoEjecucion { get; set; }
         public int IdMetaSaldoAcumuladoGerenteIndividual { get; set; }
         public int SaldoAcumuladoMeta { get; set; }
+
+        public MetaPlantillaResponseDTO()
+        {
+            this.ResultadoEjecucion = new ResultadoEjecucion();
+            this.IdMetaSaldoAcumuladoGerenteIndividual = 0;
+            this.SaldoAcumuladoMeta = 0;
+        }
+
     }
 }

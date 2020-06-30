@@ -18,6 +18,7 @@ namespace Api_GestionFC.Models
         public string BonoExcelencia { get; set; }
         public int SemanaTetraSemana { get; set; }
         public int MaxSemanas { get; set; }
+        public string TotalTetra { get; set; }
 
     }
 }

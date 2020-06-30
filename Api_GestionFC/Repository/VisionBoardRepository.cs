@@ -58,7 +58,8 @@ namespace Api_GestionFC.Repository
                                         BonoDesarrollo = reader["BonoDesarrollo"].ToString(),
                                         BonoExcelencia = reader["BonoExcelencia"].ToString(),
                                         SemanaTetraSemana = (int)reader["SemanaTetraSemana"],
-                                        MaxSemanas = (int)reader["MaxSemanas"]
+                                        MaxSemanas = (int)reader["MaxSemanas"],
+                                        TotalTetra = reader["TotalTetra"].ToString()
                                     };
                                 }
                                 reader.NextResult();
@@ -131,14 +132,14 @@ namespace Api_GestionFC.Repository
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
-                                    response.ComisionEstimada = reader["ComisionEstimada"].ToString();
+                                    response.ComisionEstimada = reader["ComisionSemana"].ToString();
                                 }
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
-                                    response.MetaAP = new Models.MetaAP()
+                                    response.ListMetaAP.Add(new Models.MetaAP()
                                     {
-                                        IdDetalleMetaSaldoAcumuladoAP = (int)reader[""],
+                                        IdDetalleMetaSaldoAcumuladoAP = (int)reader["IdDetalleMetaSaldoAcumuladoAP"],
                                         Nomina = (int)reader["Nomina"],
                                         Nombre = reader["Nombre"].ToString(),
                                         Apellidos = reader["Apellidos"].ToString(),
@@ -147,7 +148,7 @@ namespace Api_GestionFC.Repository
                                         SaldoMeta = reader["SaldoMeta"].ToString(),
                                         EsFrontera = (bool)reader["EsFrontera"],
                                         EsNovato = (bool)reader["EsNovato"]
-                                    };
+                                    });
                                 }
                             }
                         }
