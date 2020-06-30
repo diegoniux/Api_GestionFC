@@ -87,5 +87,127 @@ namespace Api_GestionFC.Repository
             }
             return response;
         }
+
+
+        public async Task<DTO.AlertaSinSaldoVirtualDTO> GetAlertaSinSaldoVirtual(int nomina)
+        {
+            var response = new DTO.AlertaSinSaldoVirtualDTO();
+            try
+            {
+                using (SqlConnection sqlConn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand sqlCmd = new SqlCommand("GFC.Spp_GenerarAlertasFoliosSinSaldo", sqlConn))
+                    {
+                        sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        sqlCmd.Parameters.AddWithValue("@p_Nomina", nomina);
+
+                        await sqlConn.OpenAsync();
+
+                        using (var reader = await sqlCmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                response.ResultadoEjecucion.EjecucionCorrecta = Convert.ToBoolean(reader["EjecucionCorrecta"]);
+                                response.ResultadoEjecucion.ErrorMessage = reader["Mensaje"].ToString();
+                                response.ResultadoEjecucion.FriendlyMessage = reader["Mensaje"].ToString();
+                            }
+
+                            //Si la ejecución es exitosa                                 
+                            if (response.ResultadoEjecucion.EjecucionCorrecta)
+                            {
+                                reader.NextResult();
+                                while (await reader.ReadAsync())
+                                {
+                                    response.Cantidad = Convert.ToInt32(reader["Cantidad"]);
+                                }
+                                reader.NextResult();
+                                while (await reader.ReadAsync())
+                                {
+                                    response.ResultDatos.Add(new Models.AlertaSinSaldoVirtual
+                                    {
+                                        IdAlerta = Convert.ToInt32(reader["IdAlerta"]),
+                                        IdTipoAlerta = Convert.ToInt32(reader["IdTipoAlerta"]),
+                                        IdEstatusAlerta = Convert.ToInt32(reader["IdEstatusAlerta"]),
+                                        Nombre = reader["Nombre"].ToString(),
+                                        Folio = reader["Folio"].ToString(),
+                                        SaldoVirtual = reader["SaldoVirtual"].ToString(),
+                                        TipoSolicitud = reader["TipoSolicitud"].ToString(),
+                                        FechaFirma = reader["FechaFirma"].ToString(),
+                                        TieneSV = Convert.ToBoolean(reader["TieneSV"])
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return response;
+        }
+
+        public async Task<DTO.AlertaSinSaldoVirtualDTO> GetAlertaSeguimientoSinSaldoVirtual(int nomina,int IdAlerta)
+        {
+            var response = new DTO.AlertaSinSaldoVirtualDTO();
+            try
+            {
+                using (SqlConnection sqlConn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand sqlCmd = new SqlCommand("GFC.Spp_SeguimientoAlertasFolioSaldo", sqlConn))
+                    {
+                        sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        sqlCmd.Parameters.AddWithValue("@p_Nomina", nomina);
+                        sqlCmd.Parameters.AddWithValue("@p_IdAlerta", IdAlerta);
+
+                        await sqlConn.OpenAsync();
+
+                        using (var reader = await sqlCmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                response.ResultadoEjecucion.EjecucionCorrecta = Convert.ToBoolean(reader["EjecucionCorrecta"]);
+                                response.ResultadoEjecucion.ErrorMessage = reader["Mensaje"].ToString();
+                                response.ResultadoEjecucion.FriendlyMessage = reader["Mensaje"].ToString();
+                            }
+
+                            //Si la ejecución es exitosa                                 
+                            if (response.ResultadoEjecucion.EjecucionCorrecta)
+                            {
+                                reader.NextResult();
+                                while (await reader.ReadAsync())
+                                {
+                                    response.Cantidad = Convert.ToInt32(reader["Cantidad"]);
+                                }
+                                reader.NextResult();
+                                while (await reader.ReadAsync())
+                                {
+                                    response.ResultDatos.Add(new Models.AlertaSinSaldoVirtual
+                                    {
+                                        IdAlerta = Convert.ToInt32(reader["IdAlerta"]),
+                                        IdTipoAlerta = Convert.ToInt32(reader["IdTipoAlerta"]),
+                                        IdEstatusAlerta = Convert.ToInt32(reader["IdEstatusAlerta"]),
+                                        Nombre = reader["Nombre"].ToString(),
+                                        Folio = reader["Folio"].ToString(),
+                                        SaldoVirtual = reader["SaldoVirtual"].ToString(),
+                                        TipoSolicitud = reader["TipoSolicitud"].ToString(),
+                                        FechaFirma = reader["FechaFirma"].ToString(),
+                                        TieneSV = Convert.ToBoolean(reader["TieneSV"])
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return response;
+        }
     }
 }

@@ -34,5 +34,39 @@ namespace Api_GestionFC.Controllers
             }
             return response;
         }
+
+        [HttpGet("GetAlertasPlantillaSinSaldoVirtual/{nomina}")]
+        public async Task<DTO.AlertaSinSaldoVirtualDTO> GetAlertasPlantillaSinSaldoVirtual(int nomina)
+        {
+            var response = new DTO.AlertaSinSaldoVirtualDTO();
+            try
+            {
+                response = await _repository.GetAlertaSinSaldoVirtual(nomina);
+            }
+            catch (Exception ex)
+            {
+                response.ResultadoEjecucion.EjecucionCorrecta = false;
+                response.ResultadoEjecucion.ErrorMessage = ex.Message;
+                response.ResultadoEjecucion.FriendlyMessage = ex.Message;
+            }
+            return response;
+        }
+
+        [HttpGet("GetAlertasPlantillaSeguimientoSinSaldoVirtual/{nomina}/{idalerta}")]
+        public async Task<DTO.AlertaSinSaldoVirtualDTO> GetAlertasPlantillaSeguimientoSinSaldoVirtual(int nomina, int idAlerta)
+        {
+            var response = new DTO.AlertaSinSaldoVirtualDTO();
+            try
+            {
+                response = await _repository.GetAlertaSeguimientoSinSaldoVirtual(nomina, idAlerta);
+            }
+            catch (Exception ex)
+            {
+                response.ResultadoEjecucion.EjecucionCorrecta = false;
+                response.ResultadoEjecucion.ErrorMessage = ex.Message;
+                response.ResultadoEjecucion.FriendlyMessage = ex.Message;
+            }
+            return response;
+        }
     }
 }
