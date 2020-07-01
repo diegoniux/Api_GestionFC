@@ -35,6 +35,7 @@ namespace Api_GestionFC.Repository
                         sqlCmd.Parameters.AddWithValue("@p_IdPantalla", logSistema.IdPantalla);
                         sqlCmd.Parameters.AddWithValue("@p_Usuario", logSistema.Usuario);
                         sqlCmd.Parameters.AddWithValue("@p_Dispositivo", logSistema.Dispositivo);
+                        sqlCmd.Parameters.AddWithValue("@p_Geolocalizacion", logSistema.Geolocalizacion);
 
 
                         await sqlConn.OpenAsync();
