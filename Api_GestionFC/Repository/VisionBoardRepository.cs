@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Api_GestionFC.Repository
 {
-    public class VisionBoardRepository
+    public class VisionBoardRepository: Comun
     {
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
@@ -137,13 +137,15 @@ namespace Api_GestionFC.Repository
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
+                                    string foto = reader["Foto"].ToString();
+
                                     response.ListMetaAP.Add(new Models.MetaAP()
                                     {
                                         IdDetalleMetaSaldoAcumuladoAP = (int)reader["IdDetalleMetaSaldoAcumuladoAP"],
                                         Nomina = (int)reader["Nomina"],
                                         Nombre = reader["Nombre"].ToString(),
                                         Apellidos = reader["Apellidos"].ToString(),
-                                        Foto = reader["Foto"].ToString(),
+                                        Foto = foto == "capi_circulo.png" ? foto : obtieneFoto(foto, _configuration),
                                         ComisionEstimada = reader["ComisionEstimada"].ToString(),
                                         SaldoMeta = reader["SaldoMeta"].ToString(),
                                         EsFrontera = (bool)reader["EsFrontera"],
