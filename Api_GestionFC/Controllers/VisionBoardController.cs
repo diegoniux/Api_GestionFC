@@ -105,5 +105,39 @@ namespace Api_GestionFC.Controllers
             return response;
         }
 
+        [HttpPost("RegistrarMetaPlantillaSaldoAcumulado")]
+        public async Task<MetaPlantillaSaldoAcumuladoResponseDTO> RegistrarMetaPlantillaSaldoAcumulado(MetaPlantillaSaldoAcumuladoRequestDTO MetaPlantillaSaldoAcumulado)
+        {
+            var response = new MetaPlantillaSaldoAcumuladoResponseDTO();
+            try
+            {
+                response = await _repository.RegistrarMetaPlantillaSaldoAcumulado(MetaPlantillaSaldoAcumulado);
+            }
+            catch (Exception ex)
+            {
+                response.ResultadoEjecucion.EjecucionCorrecta = false;
+                response.ResultadoEjecucion.ErrorMessage = ex.Message;
+                response.ResultadoEjecucion.FriendlyMessage = ex.Message;
+            }
+            return response;
+        }
+
+        [HttpPost("RegistrarMetaPlantillaComisionSem")]
+        public async Task<MetaPlantillaComisionSemResponseDTO> RegistrarMetaPlantillaComisionSem(MetaPlantillaComisionSemRequestDTO MetaPlantillaComisionSem)
+        {
+            var response = new MetaPlantillaComisionSemResponseDTO();
+            try
+            {
+                response = await _repository.RegistrarMetaPlantillaComisionSem(MetaPlantillaComisionSem);
+            }
+            catch (Exception ex)
+            {
+                response.ResultadoEjecucion.EjecucionCorrecta = false;
+                response.ResultadoEjecucion.ErrorMessage = ex.Message;
+                response.ResultadoEjecucion.FriendlyMessage = ex.Message;
+            }
+            return response;
+        }
+
     }
 }

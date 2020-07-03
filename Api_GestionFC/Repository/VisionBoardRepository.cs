@@ -197,7 +197,7 @@ namespace Api_GestionFC.Repository
                             {
                                 while (await reader.ReadAsync())
                                 {
-                                    response.IdMetaSaldoAcumuladoGerenteIndividual = (int)reader["ComisionEstimada"];
+                                    response.IdMetaSaldoAcumuladoGerenteIndividual = (int)reader["IdMetaSaldoAcumuladoGerenteIndividual"];
                                     response.SaldoAcumuladoMeta = (int)reader["SaldoAcumuladoMeta"];
                                 }
                             }
@@ -244,7 +244,7 @@ namespace Api_GestionFC.Repository
                             {
                                 while (await reader.ReadAsync())
                                 {
-                                    response.IdMetaSaldoAcumuladoGerenteIndividual = (int)reader["ComisionEstimada"];
+                                    response.IdMetaSaldoAcumuladoGerenteIndividual = (int)reader["IdMetaSaldoAcumuladoGerenteIndividual"];
                                     response.SaldoAcumuladoMeta = (int)reader["SaldoAcumuladoMeta"];
                                 }
                             }
@@ -292,6 +292,100 @@ namespace Api_GestionFC.Repository
                                 while (await reader.ReadAsync())
                                 {
                                     response.IdMetaSaldoAcumuladoGerenteIndividual = (int)reader["ComisionEstimada"];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return response;
+        }
+
+        public async Task<MetaPlantillaComisionSemResponseDTO> RegistrarMetaPlantillaComisionSem(MetaPlantillaComisionSemRequestDTO Request)
+        {
+            var response = new MetaPlantillaComisionSemResponseDTO();
+            try
+            {
+                using (SqlConnection sqlConn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand sqlCmd = new SqlCommand("GFC.Spp_RegistrarMetaPlantillaComisionSem", sqlConn))
+                    {
+                        sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        sqlCmd.Parameters.AddWithValue("@p_IdMetaSaldoAcumuladoGerenteIndividual", Request.MetaComisionSem.IdMetaSaldoAcumuladoGerenteIndividual);
+                        sqlCmd.Parameters.AddWithValue("@p_IdPeriodo", Request.MetaComisionSem.IdPeriodo);
+                        sqlCmd.Parameters.AddWithValue("@p_Nomina", Request.MetaComisionSem.Nomina);
+                        sqlCmd.Parameters.AddWithValue("@p_ComisionSem", Request.MetaComisionSem.ComisionSem);
+
+                        await sqlConn.OpenAsync();
+
+                        using (var reader = await sqlCmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                response.ResultadoEjecucion.EjecucionCorrecta = Convert.ToBoolean(reader["EjecucionCorrecta"]);
+                                response.ResultadoEjecucion.ErrorMessage = reader["Mensaje"].ToString();
+                                response.ResultadoEjecucion.FriendlyMessage = reader["Mensaje"].ToString();
+                            }
+
+                            //Si la ejecución es exitosa                                 
+                            if (response.ResultadoEjecucion.EjecucionCorrecta)
+                            {
+                                while (await reader.ReadAsync())
+                                {
+                                    response.IdMetaSaldoAcumuladoGerenteIndividual = (int)reader["IdMetaSaldoAcumuladoGerenteIndividual"];
+                                    response.SaldoAcumuladoMeta = (int)reader["SaldoAcumuladoMeta"];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return response;
+        }
+
+        public async Task<MetaPlantillaSaldoAcumuladoResponseDTO> RegistrarMetaPlantillaSaldoAcumulado(MetaPlantillaSaldoAcumuladoRequestDTO Request)
+        {
+            var response = new MetaPlantillaSaldoAcumuladoResponseDTO();
+            try
+            {
+                using (SqlConnection sqlConn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand sqlCmd = new SqlCommand("GFC.Spp_RegistrarMetaPlantillaSaldoAcumulado", sqlConn))
+                    {
+                        sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        sqlCmd.Parameters.AddWithValue("@p_IdMetaSaldoAcumuladoGerenteIndividual", Request.MetaSaldoAcumulado.IdMetaSaldoAcumuladoGerenteIndividual);
+                        sqlCmd.Parameters.AddWithValue("@p_IdPeriodo", Request.MetaSaldoAcumulado.IdPeriodo);
+                        sqlCmd.Parameters.AddWithValue("@p_Nomina", Request.MetaSaldoAcumulado.Nomina);
+                        sqlCmd.Parameters.AddWithValue("@p_SaldoAcumuladoMeta", Request.MetaSaldoAcumulado.SaldoAcumuladoMeta);
+
+                        await sqlConn.OpenAsync();
+
+                        using (var reader = await sqlCmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                response.ResultadoEjecucion.EjecucionCorrecta = Convert.ToBoolean(reader["EjecucionCorrecta"]);
+                                response.ResultadoEjecucion.ErrorMessage = reader["Mensaje"].ToString();
+                                response.ResultadoEjecucion.FriendlyMessage = reader["Mensaje"].ToString();
+                            }
+
+                            //Si la ejecución es exitosa                                 
+                            if (response.ResultadoEjecucion.EjecucionCorrecta)
+                            {
+                                while (await reader.ReadAsync())
+                                {
+                                    response.IdMetaSaldoAcumuladoGerenteIndividual = (int)reader["IdMetaSaldoAcumuladoGerenteIndividual"];
+                                    response.SaldoAcumuladoMeta = (int)reader["SaldoAcumuladoMeta"];
                                 }
                             }
                         }
