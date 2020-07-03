@@ -131,7 +131,7 @@ namespace Api_GestionFC.Repository
                                         IdEstatusAlerta = Convert.ToInt32(reader["IdEstatusAlerta"]),
                                         Nombre = reader["Nombre"].ToString(),
                                         Folio = reader["Folio"].ToString(),
-                                        SaldoVirtual = reader["SaldoVirtual"].ToString(),
+                                        SaldoVirtual = Convert.ToDecimal(reader["SaldoVirtual"]).ToString("C0"),
                                         TipoSolicitud = reader["TipoSolicitud"].ToString(),
                                         FechaFirma = reader["FechaFirma"].ToString(),
                                         TieneSV = Convert.ToBoolean(reader["TieneSV"])
