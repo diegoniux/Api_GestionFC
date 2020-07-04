@@ -49,7 +49,7 @@ namespace Api_GestionFC.Repository
                                 while (await reader.ReadAsync())
                                 {
                                     string foto = reader["Foto"].ToString();
-                                    response.TopGerentes.Add(new Models.RankingAP
+                                    response.TopGerentes.Add(new Models.RankingGte
                                     {
                                         Nombre = reader["Nombre"].ToString(),
                                         Apellidos = reader["Apellidos"].ToString(),
@@ -60,6 +60,7 @@ namespace Api_GestionFC.Repository
                                         NumTraspaso = Convert.ToInt32(reader["NumTraspaso"]),
                                         ImgPosicionSemAnt = string.Empty,
                                         ColorPosicion = reader["ColorPosicion"].ToString(),
+                                        ColorTextoSaldo = string.Empty,
                                         Estrellas = new Models.RankEstrellas
                                         {
                                             semana1 = reader["EstrellasSem1"].ToString(),
@@ -73,7 +74,7 @@ namespace Api_GestionFC.Repository
                                 while (await reader.ReadAsync())
                                 {
                                     string foto = reader["Foto"].ToString();
-                                    response.Gerentes.Add(new Models.RankingAP
+                                    response.Gerentes.Add(new Models.RankingGte
                                     {
                                         Nombre = reader["Nombre"].ToString(),
                                         Apellidos = reader["Apellidos"].ToString(),
@@ -84,6 +85,7 @@ namespace Api_GestionFC.Repository
                                         NumTraspaso = Convert.ToInt32(reader["NumTraspaso"]),
                                         ImgPosicionSemAnt = reader["ImgPosicionSemAnt"].ToString(),
                                         ColorPosicion = string.Empty,
+                                        ColorTextoSaldo = reader["ColorTextoSaldo"].ToString(),
                                         Estrellas = new Models.RankEstrellas
                                         {
                                             semana1 = reader["EstrellasSem1"].ToString(),

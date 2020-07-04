@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Api_GestionFC.Models
 {
-    public class RankingAP
+    public class RankingGte
     {
         public string Nombre { get; set; }
         public string Apellidos { get; set; }
@@ -16,6 +16,7 @@ namespace Api_GestionFC.Models
         public int NumTraspaso { get; set; }
         public string ImgPosicionSemAnt { get; set; }
         public string ColorPosicion { get; set; }
+        public string ColorTextoSaldo { get; set; }
         public RankEstrellas Estrellas { get; set; }
 
     }
