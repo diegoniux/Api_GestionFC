@@ -130,6 +130,7 @@ namespace Api_GestionFC.Repository
                                         IdTipoAlerta = Convert.ToInt32(reader["IdTipoAlerta"]),
                                         IdEstatusAlerta = Convert.ToInt32(reader["IdEstatusAlerta"]),
                                         Nombre = reader["Nombre"].ToString(),
+                                        Apellidos = reader["Apellidos"].ToString(),
                                         Folio = reader["Folio"].ToString(),
                                         SaldoVirtual = Convert.ToDecimal(reader["SaldoVirtual"]).ToString("C0"),
                                         TipoSolicitud = reader["TipoSolicitud"].ToString(),
