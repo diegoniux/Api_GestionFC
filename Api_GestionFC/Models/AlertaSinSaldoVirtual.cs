@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading.Tasks;
 
 namespace Api_GestionFC.Models
@@ -11,6 +12,7 @@ namespace Api_GestionFC.Models
         public int IdTipoAlerta { get; set; }
         public int IdEstatusAlerta { get; set; }
         public string Nombre { get; set; }
+        public string Apellidos { get; set; }
         public string Folio { get; set; }
         public string SaldoVirtual { get; set; }
         public string TipoSolicitud { get; set; }

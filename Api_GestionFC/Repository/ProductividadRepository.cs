@@ -102,6 +102,20 @@ namespace Api_GestionFC.Repository
                                     response.ResultAnioSemana.SemanaAnio = Convert.ToInt32(reader["SemanaAnio"]);
                                     response.ResultAnioSemana.FechaCorte = Convert.ToDateTime(reader["FechaCorte"]);
                                     response.ResultAnioSemana.EsUltimaFechaCorte = Convert.ToBoolean(reader["EsUltimaFechaCorte"]);
+                                    response.ResultAnioSemana.TotalSaldoVirtualLunes = Convert.ToInt32(reader["TotalSaldoVirtualLunes"]);
+                                    response.ResultAnioSemana.TotalSaldoVirtualMartes = Convert.ToInt32(reader["TotalSaldoVirtualMartes"]);
+                                    response.ResultAnioSemana.TotalSaldoVirtualMiercoles = Convert.ToInt32(reader["TotalSaldoVirtualMiercoles"]);
+                                    response.ResultAnioSemana.TotalSaldoVirtualJueves = Convert.ToInt32(reader["TotalSaldoVirtualJueves"]);
+                                    response.ResultAnioSemana.TotalSaldoVirtualViernes = Convert.ToInt32(reader["TotalSaldoVirtualViernes"]);
+                                    response.ResultAnioSemana.TotalSaldoVirtualSabado = Convert.ToInt32(reader["TotalSaldoVirtualSabado"]);
+                                    response.ResultAnioSemana.TotalSaldoVirtualDomingo = Convert.ToInt32(reader["TotalSaldoVirtualDomingo"]);
+                                    response.ResultAnioSemana.TotalSaldoVirtualSemana = Convert.ToInt32(reader["TotalSaldoVirtualSemana"]);
+                                    response.ResultAnioSemana.TotalSaldoVirtualFaltante = Convert.ToInt32(reader["TotalSaldoVirtualFaltante"]);
+                                    response.ResultAnioSemana.TotalMetaSemana = Convert.ToInt32(reader["TotalMetaSemana"]);
+                                    response.ResultAnioSemana.TotalFCTInactivos = Convert.ToInt32(reader["TotalFCTInactivos"]);
+                                    response.ResultAnioSemana.TotalFCTActivos = Convert.ToInt32(reader["TotalFCTActivos"]);
+                                    response.ResultAnioSemana.TotalFoliosMenores30k = Convert.ToInt32(reader["TotalFoliosMenores30k"]);
+                                    response.ResultAnioSemana.TotalFoliosCertificados = Convert.ToInt32(reader["TotalFoliosCertificados"]);
                                 }
                             }
                         }
