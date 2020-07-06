@@ -132,7 +132,7 @@ namespace Api_GestionFC.Repository
                                         Nombre = reader["Nombre"].ToString(),
                                         Apellidos = reader["Apellidos"].ToString(),
                                         Folio = reader["Folio"].ToString(),
-                                        SaldoVirtual = Convert.ToDecimal(reader["SaldoVirtual"]).ToString("C0"),
+                                        SaldoVirtual = reader["SaldoVirtual"].ToString(),
                                         TipoSolicitud = reader["TipoSolicitud"].ToString(),
                                         FechaFirma = reader["FechaFirma"].ToString(),
                                         TieneSV = Convert.ToBoolean(reader["TieneSV"])
