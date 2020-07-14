@@ -35,6 +35,40 @@ namespace Api_GestionFC.Controllers
             return response;
         }
 
+        [HttpGet("GetAlertasPlantillaRecuperacion/{nomina}")]
+        public async Task<DTO.AlertaRecuperacionDTO> GetAlertasPlantillaRecuperacion(int nomina)
+        {
+            var response = new DTO.AlertaRecuperacionDTO();
+            try
+            {
+                response = await _repository.GetAlertaRecuperacion(nomina);
+            }
+            catch (Exception ex)
+            {
+                response.ResultadoEjecucion.EjecucionCorrecta = false;
+                response.ResultadoEjecucion.ErrorMessage = ex.Message;
+                response.ResultadoEjecucion.FriendlyMessage = ex.Message;
+            }
+            return response;
+        }
+
+        [HttpGet("GetAlertasPlantillaInvestigacion/{nomina}")]
+        public async Task<DTO.AlertaInvestigacionDTO> GetAlertasPlantillaInvestigacion(int nomina)
+        {
+            var response = new DTO.AlertaInvestigacionDTO();
+            try
+            {
+                response = await _repository.GetAlertaInvestigacion(nomina);
+            }
+            catch (Exception ex)
+            {
+                response.ResultadoEjecucion.EjecucionCorrecta = false;
+                response.ResultadoEjecucion.ErrorMessage = ex.Message;
+                response.ResultadoEjecucion.FriendlyMessage = ex.Message;
+            }
+            return response;
+        }
+
         [HttpGet("GetAlertasPlantillaSinSaldoVirtual/{nomina}")]
         public async Task<DTO.AlertaSinSaldoVirtualDTO> GetAlertasPlantillaSinSaldoVirtual(int nomina)
         {

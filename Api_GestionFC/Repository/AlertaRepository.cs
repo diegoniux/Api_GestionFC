@@ -211,5 +211,143 @@ namespace Api_GestionFC.Repository
             }
             return response;
         }
+
+        public async Task<DTO.AlertaRecuperacionDTO> GetAlertaRecuperacion(int nomina)
+        {
+            var response = new DTO.AlertaRecuperacionDTO();
+            try
+            {
+                using (SqlConnection sqlConn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand sqlCmd = new SqlCommand("GFC.Spp_GenerarAlertasPlantillaRecuperacion", sqlConn))
+                    {
+                        sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        sqlCmd.Parameters.AddWithValue("@p_Nomina", nomina);
+
+                        await sqlConn.OpenAsync();
+
+                        using (var reader = await sqlCmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                response.ResultadoEjecucion.EjecucionCorrecta = Convert.ToBoolean(reader["EjecucionCorrecta"]);
+                                response.ResultadoEjecucion.ErrorMessage = reader["Mensaje"].ToString();
+                                response.ResultadoEjecucion.FriendlyMessage = reader["Mensaje"].ToString();
+                            }
+
+                            //Si la ejecución es exitosa                                 
+                            if (response.ResultadoEjecucion.EjecucionCorrecta)
+                            {
+                                string foto;
+                                reader.NextResult();
+                                while (await reader.ReadAsync())
+                                {
+                                    response.Cantidad = Convert.ToInt32(reader["Cantidad"]);
+                                }
+                                reader.NextResult();
+                                while (await reader.ReadAsync())
+                                {
+                                    foto = reader["Foto"].ToString();
+                                    response.ResultDatos.Add(new Models.AlertaRecuperacion
+                                    {
+                                        Foto = foto == "capi_circulo.png" ? foto : obtieneFoto(foto, _configuration),
+                                        IdAlerta = Convert.ToInt32(reader["IdAlerta"]),
+                                        IdTipoAlerta = Convert.ToInt32(reader["IdTipoAlerta"]),
+                                        IdEstatusAlerta = Convert.ToInt32(reader["IdEstatusAlerta"]),
+                                        NominaAP = Convert.ToInt32(reader["NominaAP"]),
+                                        NombreAP = reader["NombreAP"].ToString(),
+                                        ApellidosAP = reader["ApellidosAP"].ToString(),
+                                        ValidacionesRecuperacion = Convert.ToInt32(reader["ValidacionesRecuperacion"]),
+                                        Msj1 = reader["Msj1"].ToString(),
+                                        Msj2 = reader["Msj2"].ToString(),
+                                        Msj3 = reader["Msj3"].ToString(),
+                                        BanderaCalendar = Convert.ToBoolean(reader["BanderaCalendar"]),
+                                        ColorCalendar = reader["ColorCalendar"].ToString(),
+                                        MsjEstatus = reader["MsjEstatus"].ToString(),
+                                        ImgNotificacion = reader["ImgNotificacion"].ToString(),
+                                        ImgWarning = Convert.ToBoolean(reader["ImgWarning"])
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return response;
+        }
+
+        public async Task<DTO.AlertaInvestigacionDTO> GetAlertaInvestigacion(int nomina)
+        {
+            var response = new DTO.AlertaInvestigacionDTO();
+            try
+            {
+                using (SqlConnection sqlConn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand sqlCmd = new SqlCommand("GFC.Spp_GenerarAlertasPlantillaInvestigacion", sqlConn))
+                    {
+                        sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        sqlCmd.Parameters.AddWithValue("@p_Nomina", nomina);
+
+                        await sqlConn.OpenAsync();
+
+                        using (var reader = await sqlCmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                response.ResultadoEjecucion.EjecucionCorrecta = Convert.ToBoolean(reader["EjecucionCorrecta"]);
+                                response.ResultadoEjecucion.ErrorMessage = reader["Mensaje"].ToString();
+                                response.ResultadoEjecucion.FriendlyMessage = reader["Mensaje"].ToString();
+                            }
+
+                            //Si la ejecución es exitosa                                 
+                            if (response.ResultadoEjecucion.EjecucionCorrecta)
+                            {
+                                string foto;
+                                reader.NextResult();
+                                while (await reader.ReadAsync())
+                                {
+                                    response.Cantidad = Convert.ToInt32(reader["Cantidad"]);
+                                }
+                                reader.NextResult();
+                                while (await reader.ReadAsync())
+                                {
+                                    foto = reader["Foto"].ToString();
+                                    response.ResultDatos.Add(new Models.AlertaInvestigacion
+                                    {
+                                        Foto = foto == "capi_circulo.png" ? foto : obtieneFoto(foto, _configuration),
+                                        IdAlerta = Convert.ToInt32(reader["IdAlerta"]),
+                                        IdTipoAlerta = Convert.ToInt32(reader["IdTipoAlerta"]),
+                                        IdEstatusAlerta = Convert.ToInt32(reader["IdEstatusAlerta"]),
+                                        NominaAP = Convert.ToInt32(reader["NominaAP"]),
+                                        NombreAP = reader["NombreAP"].ToString(),
+                                        ApellidosAP = reader["ApellidosAP"].ToString(),
+                                        ValidacionesInvestigacion = Convert.ToInt32(reader["ValidacionesInvestigacion"]),
+                                        Msj1 = reader["Msj1"].ToString(),
+                                        Msj2 = reader["Msj2"].ToString(),
+                                        Msj3 = reader["Msj3"].ToString(),
+                                        BanderaCalendar = Convert.ToBoolean(reader["BanderaCalendar"]),
+                                        ColorCalendar = reader["ColorCalendar"].ToString(),
+                                        MsjEstatus = reader["MsjEstatus"].ToString(),
+                                        ImgNotificacion = reader["ImgNotificacion"].ToString(),
+                                        ImgWarning = Convert.ToBoolean(reader["ImgWarning"])
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return response;
+        }
     }
 }
