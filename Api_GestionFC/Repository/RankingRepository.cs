@@ -63,10 +63,10 @@ namespace Api_GestionFC.Repository
                                         ColorTextoSaldo = string.Empty,
                                         Estrellas = new Models.RankSemanal
                                         {
-                                            semana1 = reader["MonedasSem1"].ToString(),
-                                            semana2 = reader["MonedasSem2"].ToString(),
-                                            semana3 = reader["MonedasSem3"].ToString(),
-                                            semana4 = reader["MonedasSem4"].ToString()
+                                            semana1 = reader["EstrellasSem1"].ToString(),
+                                            semana2 = reader["EstrellasSem2"].ToString(),
+                                            semana3 = reader["EstrellasSem3"].ToString(),
+                                            semana4 = reader["EstrellasSem4"].ToString()
                                         }
                                     });
                                 }
@@ -88,10 +88,10 @@ namespace Api_GestionFC.Repository
                                         ColorTextoSaldo = reader["ColorTextoSaldo"].ToString(),
                                         Estrellas = new Models.RankSemanal
                                         {
-                                            semana1 = reader["MonedasSem1"].ToString(),
-                                            semana2 = reader["MonedasSem2"].ToString(),
-                                            semana3 = reader["MonedasSem3"].ToString(),
-                                            semana4 = reader["MonedasSem4"].ToString()
+                                            semana1 = reader["EstrellasSem1"].ToString(),
+                                            semana2 = reader["EstrellasSem2"].ToString(),
+                                            semana3 = reader["EstrellasSem3"].ToString(),
+                                            semana4 = reader["EstrellasSem4"].ToString()
                                         }
                                     });
                                 }
