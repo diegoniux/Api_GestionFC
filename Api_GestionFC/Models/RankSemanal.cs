@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Api_GestionFC.Models
 {
-    public class RankEstrellas
+    public class RankSemanal
     {
         public string semana1 { get; set; }
         public string semana2 { get; set; }

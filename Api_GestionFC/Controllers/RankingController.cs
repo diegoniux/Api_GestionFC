@@ -19,13 +19,30 @@ namespace Api_GestionFC.Controllers
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        [HttpGet("{nomina}")]
+        [HttpGet("GetRanking/{nomina}")]
         public async Task<DTO.RankingDTO> GetRanking(int nomina)
         {
             var response = new DTO.RankingDTO();
             try
             {
                 response = await _repository.GetRanking(nomina);
+            }
+            catch (Exception ex)
+            {
+                response.ResultadoEjecucion.EjecucionCorrecta = false;
+                response.ResultadoEjecucion.ErrorMessage = ex.Message;
+                response.ResultadoEjecucion.FriendlyMessage = ex.Message;
+            }
+            return response;
+        }
+
+        [HttpGet("GetRankingEspecialistas/{nomina}")]
+        public async Task<DTO.RankingEspecialistasDTO> GetRankingEspecialistas(int nomina)
+        {
+            var response = new DTO.RankingEspecialistasDTO();
+            try
+            {
+                response = await _repository.GetRankingEspecialistas(nomina);
             }
             catch (Exception ex)
             {
