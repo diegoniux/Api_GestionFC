@@ -13,5 +13,6 @@ namespace Api_GestionFC.Models
         public string Genero { get; set; }
         public string Foto { get; set; }
         public string SaldoVirtual { get; set; }
+        public int NumTraspaso { get; set; }
     }
 }

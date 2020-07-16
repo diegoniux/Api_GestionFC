@@ -192,6 +192,12 @@ namespace Api_GestionFC.Repository
                                         }
                                     });
                                 }
+                                reader.NextResult();
+                                while (await reader.ReadAsync())
+                                {
+                                    response.Dia = reader["Dia"].ToString();
+                                    response.Hora = reader["Hora"].ToString();
+                                }
                             }
                         }
                     }

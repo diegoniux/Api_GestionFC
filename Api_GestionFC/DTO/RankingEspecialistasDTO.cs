@@ -10,7 +10,8 @@ namespace Api_GestionFC.DTO
         public Models.ResultadoEjecucion ResultadoEjecucion { get; set; }
         public List<Models.RankingEspecialista> TopEspecialistas { get; set; }
         public List<Models.RankingEspecialista> Especialistas { get; set; }
-        public string ImgPosicionSemAntNacional { get; set; }
+        public string Dia { get; set; }
+        public string Hora { get; set; }
 
         public RankingEspecialistasDTO()
         {
