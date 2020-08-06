@@ -102,5 +102,22 @@ namespace Api_GestionFC.Controllers
             }
             return response;
         }
+        
+        [HttpGet("GetFoliosRecuperacion/{nomina}")]
+        public async Task<DTO.FoliosRecuperacionDTO> GetFoliosRecuperacion(int nomina)
+        {
+            var response = new DTO.FoliosRecuperacionDTO();
+            try
+            {
+                response = await _repository.GetFoliosRecuperacion(nomina);
+            }
+            catch (Exception ex)
+            {
+                response.ResultadoEjecucion.EjecucionCorrecta = false;
+                response.ResultadoEjecucion.ErrorMessage = ex.Message;
+                response.ResultadoEjecucion.FriendlyMessage = ex.Message;
+            }
+            return response;
+        }
     }
 }

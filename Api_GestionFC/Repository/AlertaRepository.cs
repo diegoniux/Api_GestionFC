@@ -349,5 +349,48 @@ namespace Api_GestionFC.Repository
             }
             return response;
         }
+        public async Task<DTO.FoliosRecuperacionDTO> GetFoliosRecuperacion(int nomina)
+        {
+            var response = new DTO.FoliosRecuperacionDTO();
+            try
+            {
+                using (SqlConnection sqlConn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand sqlCmd = new SqlCommand("Sps_Reporte_TramitesRecuperacion", sqlConn))
+                    {
+                        sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        sqlCmd.Parameters.AddWithValue("@p_UsuarioId", nomina);
+
+                        await sqlConn.OpenAsync();
+
+                        using (var reader = await sqlCmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                response.ResultadoEjecucion.EjecucionCorrecta = Convert.ToBoolean(reader["EjecucionCorrecta"]);
+                                response.ResultadoEjecucion.ErrorMessage = reader["Mensaje"].ToString();
+                                response.ResultadoEjecucion.FriendlyMessage = reader["Mensaje"].ToString();
+                            }
+
+                            //Si la ejecución es exitosa                                 
+                            if (response.ResultadoEjecucion.EjecucionCorrecta)
+                            {
+                                reader.NextResult();
+                                while (await reader.ReadAsync())
+                                {
+                                    response.ListadoFolios.Add(reader["FolioSolicitud"].ToString());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return response;
+        }
     }
 }

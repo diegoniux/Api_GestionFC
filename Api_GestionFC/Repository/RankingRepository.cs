@@ -195,8 +195,8 @@ namespace Api_GestionFC.Repository
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
-                                    response.Dia = reader["Dia"].ToString();
-                                    response.Hora = reader["Hora"].ToString();
+                                    response.Dias = reader["Dias"].ToString();
+                                    response.Horas = reader["Horas"].ToString();
                                 }
                             }
                         }
