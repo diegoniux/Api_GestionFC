@@ -379,7 +379,11 @@ namespace Api_GestionFC.Repository
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
-                                    response.ListadoFolios.Add(reader["FolioSolicitud"].ToString());
+                                    response.ListadoFolios.Add(new Models.FolioSolicitud
+                                    {
+                                        Folio = reader["FolioSolicitud"].ToString(),
+                                        RegistroTraspasoId = Convert.ToInt32(reader["RegistroTraspasoId"])
+                                    });
                                 }
                             }
                         }
