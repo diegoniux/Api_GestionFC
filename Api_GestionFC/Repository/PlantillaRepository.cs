@@ -52,6 +52,7 @@ namespace Api_GestionFC.Repository
                                     string foto = reader["Foto"].ToString();
                                     response.Promotores.Add(new Models.Progreso
                                     {
+                                        NominaPromotor = Convert.ToInt32(reader["NominaPromotor"]),                                      
                                         Nombre = reader["Nombre"].ToString(),
                                         Apellidos = reader["Apellidos"].ToString(),
                                         Foto = foto == "capi_circulo.png" ? foto : obtieneFoto(foto, _configuration),
@@ -65,7 +66,7 @@ namespace Api_GestionFC.Repository
                                         FCTInactivos = Convert.ToInt32(reader["FCTInactivos"]),
                                         TramitesCertificados = Convert.ToInt32(reader["TramitesCertificados"]),
                                         PorcentajeSaldoVirtualDesc = Convert.ToDecimal(reader["PorcentajeSaldoVirtual"]).ToString("0%")
-                                    });
+                                    });;
                                 }
                             }
                         }
