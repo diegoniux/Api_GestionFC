@@ -18,13 +18,13 @@ namespace Api_GestionFC.Controllers
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        [HttpGet("GetAlertasPlantillaImproductividad/{nomina}")]
-        public async Task<DTO.AlertaImproductividadDTO> GetAlertasPlantillaImproductividad(int nomina)
+        [HttpGet("GetAlertasPlantillaImproductividad/{nomina}/{nominaAP?}")]
+        public async Task<DTO.AlertaImproductividadDTO> GetAlertasPlantillaImproductividad(int nomina, int? nominaAP = null)
         {
             var response = new DTO.AlertaImproductividadDTO();
             try
             {
-                response = await _repository.GetAlertaImproductividad(nomina);
+                response = await _repository.GetAlertaImproductividad(nomina, nominaAP);
             }
             catch (Exception ex)
             {

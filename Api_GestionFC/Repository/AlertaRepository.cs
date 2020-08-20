@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace Api_GestionFC.Repository
 {
@@ -18,7 +19,7 @@ namespace Api_GestionFC.Repository
             this._configuration = configuration;
         }
 
-        public async Task<DTO.AlertaImproductividadDTO> GetAlertaImproductividad(int nomina)
+        public async Task<DTO.AlertaImproductividadDTO> GetAlertaImproductividad(int nomina, int? NominaAP = null)
         {
             var response = new DTO.AlertaImproductividadDTO();
             try
@@ -30,6 +31,10 @@ namespace Api_GestionFC.Repository
                         sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                         sqlCmd.Parameters.AddWithValue("@p_Nomina", nomina);
+                        if (NominaAP != null)
+                        {
+                            sqlCmd.Parameters.AddWithValue("@p_NominaAP", NominaAP);
+                        }
 
                         await sqlConn.OpenAsync();
 
