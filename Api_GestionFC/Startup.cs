@@ -41,6 +41,7 @@ namespace Api_GestionFC
             services.AddScoped<RankingRepository>();
             services.AddScoped<AlertaRepository>();
             services.AddScoped<VisionBoardRepository>();
+            services.AddScoped<DetalleEspecialistaRepository>();
 
             services.AddControllers();
 
