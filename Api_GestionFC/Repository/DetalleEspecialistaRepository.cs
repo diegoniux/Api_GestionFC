@@ -140,12 +140,15 @@ namespace Api_GestionFC.Repository
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
-                                    response.detalleEtapas.RegistroTraspasoId = Convert.ToInt32(reader["RegistroTraspasoId"]);
-                                    response.detalleEtapas.EtapaId = Convert.ToInt32(reader["EtapaId"]);
-                                    response.detalleEtapas.EtapaDescripcion = reader["EtapaDescripcion"].ToString();
-                                    response.detalleEtapas.Usuario = reader["Usuario"].ToString();
-                                    response.detalleEtapas.Fecha = reader["Fecha"].ToString();
-                                    response.detalleEtapas.Hora = reader["Hora"].ToString();
+                                    response.detalleEtapas.Add(new Models.SolicitudRegistroTraspasoEtapas {
+
+                                        RegistroTraspasoId = Convert.ToInt32(reader["RegistroTraspasoId"]),
+                                        EtapaId = Convert.ToInt32(reader["EtapaId"]),
+                                        EtapaDescripcion = reader["EtapaDescripcion"].ToString(),
+                                        Usuario = reader["Usuario"].ToString(),
+                                        Fecha = reader["Fecha"].ToString(),
+                                        Hora = reader["Hora"].ToString()
+                                    });
                                 }
                             }
                         }

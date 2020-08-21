@@ -10,13 +10,13 @@ namespace Api_GestionFC.DTO
     {
         public Models.ResultadoEjecucion ResultadoEjecucion { get; set; }
         public SolicitudRegistroTraspaso detalleFolios { get; set; }
-        public SolicitudRegistroTraspasoEtapas detalleEtapas { get; set; }
+        public List<SolicitudRegistroTraspasoEtapas> detalleEtapas { get; set; }
 
         public DetalleFolioDTO()
         {
             this.ResultadoEjecucion = new ResultadoEjecucion();
             this.detalleFolios = new SolicitudRegistroTraspaso();
-            this.detalleEtapas = new SolicitudRegistroTraspasoEtapas();
+            this.detalleEtapas = new List<SolicitudRegistroTraspasoEtapas>();
         }
     }
 }
