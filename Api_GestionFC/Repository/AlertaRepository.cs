@@ -15,7 +15,7 @@ namespace Api_GestionFC.Repository
 
         public AlertaRepository(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("AfiliacionDB");
+            _connectionString = configuration.GetConnectionString("AfiliacionDBDEV");
             this._configuration = configuration;
         }
 
@@ -390,6 +390,96 @@ namespace Api_GestionFC.Repository
                                         RegistroTraspasoId = Convert.ToInt32(reader["RegistroTraspasoId"])
                                     });
                                 }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return response;
+        }
+
+        public async Task<DTO.AlertaRecuperacionDTO> GetDetalleFolioRecuperacion(int RegistroTraspasoId, int PantallaId)
+        {
+            var response = new DTO.AlertaRecuperacionDTO();
+            try
+            {
+                using (SqlConnection sqlConn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand sqlCmd = new SqlCommand("GFC.Sps_Detalle_FolioRecuperacion", sqlConn))
+                    {
+                        sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        sqlCmd.Parameters.AddWithValue("@p_RegistroTraspasoId", RegistroTraspasoId);
+                        sqlCmd.Parameters.AddWithValue("@p_PantallaId", PantallaId);
+
+                        await sqlConn.OpenAsync();
+
+                        using (var reader = await sqlCmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                response.ResultadoEjecucion.EjecucionCorrecta = Convert.ToBoolean(reader["EjecucionCorrecta"]);
+                                response.ResultadoEjecucion.ErrorMessage = reader["Mensaje"].ToString();
+                                response.ResultadoEjecucion.FriendlyMessage = reader["Mensaje"].ToString();
+                            }
+
+                            //Si la ejecución es exitosa                                 
+                            if (response.ResultadoEjecucion.EjecucionCorrecta)
+                            {
+                                string documento;
+                                string Path;
+                                int Len;
+                                reader.NextResult();
+                                while (await reader.ReadAsync())
+                                {
+                                    response.Pantallas.Add(new Models.AlertaRecuperacionPantallas
+                                    {
+                                        PantallaId = Convert.ToInt32(reader["PantallaId"]),
+                                        PantallaDesc = reader["PantallaDesc"].ToString()
+                                    });
+                                }
+                                reader.NextResult();
+                                while (await reader.ReadAsync())
+                                {
+                                    response.Preguntas.Add(new Models.AlertaRecuperacionPreguntas
+                                    {
+                                        PreguntaId = Convert.ToInt32(reader["PreguntaId"]),
+                                        PreguntaDesc = reader["PreguntaDesc"].ToString()
+                                    });
+                                }
+                                reader.NextResult();
+                                while (await reader.ReadAsync())
+                                {
+                                    Path = reader["Path"].ToString();
+                                    Len = Path.Length;
+                                    if(Path.Substring(Len - 1,1) == @"\")
+                                    {
+                                        documento = Path + reader["Mascara"].ToString();
+                                    }
+                                    else
+                                    {
+                                        documento = Path + @"\" + reader["Mascara"].ToString();
+                                    }
+                                    documento = documento.Replace("\\\\", "\\");
+
+                                    response.Documentos.Add(new Models.AlertaRecuperacionDocumentos
+                                    {
+                                        Pantalla = Convert.ToInt32(reader["Pantalla"]),
+                                        ExpedienteTipoId = Convert.ToInt32(reader["ExpedienteTipoId"]),
+                                        ExpedienteDesc = reader["ExpedienteDesc"].ToString(),
+                                        DocumentoTipoId = Convert.ToInt32(reader["DocumentoTipoId"]),
+                                        DocumentoDesc = reader["DocumentoDesc"].ToString(),
+                                        ClaveDocumento = reader["ClaveDocumento"].ToString(),
+                                        Consecutivo = Convert.ToInt32(reader["Consecutivo"]),
+                                        Mascara = obtieneFoto(documento, _configuration),
+                                        Path = reader["Path"].ToString()
+                                    });
+                                }
+
                             }
                         }
                     }

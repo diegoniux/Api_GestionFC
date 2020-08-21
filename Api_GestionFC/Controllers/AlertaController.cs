@@ -119,5 +119,22 @@ namespace Api_GestionFC.Controllers
             }
             return response;
         }
+
+        [HttpGet("GetDetalleFolioRecuperacion/{RegistroTraspasoId}/{PantallaId}")]
+        public async Task<DTO.AlertaRecuperacionDTO> GetDetalleFolioRecuperacion(int RegistroTraspasoId, int PantallaId)
+        {
+            var response = new DTO.AlertaRecuperacionDTO();
+            try
+            {
+                response = await _repository.GetDetalleFolioRecuperacion(RegistroTraspasoId,PantallaId);
+            }
+            catch (Exception ex)
+            {
+                response.ResultadoEjecucion.EjecucionCorrecta = false;
+                response.ResultadoEjecucion.ErrorMessage = ex.Message;
+                response.ResultadoEjecucion.FriendlyMessage = ex.Message;
+            }
+            return response;
+        }
     }
 }
