@@ -19,7 +19,7 @@ namespace Api_GestionFC.Controllers
         }
 
         [HttpGet("GetAlertasPlantillaImproductividad/{nomina}/{nominaAP?}")]
-        public async Task<DTO.AlertaImproductividadDTO> GetAlertasPlantillaImproductividad(int nomina, int? nominaAP = null)
+        public async Task<DTO.AlertaImproductividadDTO> GetAlertasPlantillaImproductividad(int nomina, int nominaAP = 0)
         {
             var response = new DTO.AlertaImproductividadDTO();
             try

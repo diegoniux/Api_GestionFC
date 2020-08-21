@@ -19,7 +19,7 @@ namespace Api_GestionFC.Repository
             this._configuration = configuration;
         }
 
-        public async Task<DTO.AlertaImproductividadDTO> GetAlertaImproductividad(int nomina, int? NominaAP = null)
+        public async Task<DTO.AlertaImproductividadDTO> GetAlertaImproductividad(int nomina, int NominaAP = 0)
         {
             var response = new DTO.AlertaImproductividadDTO();
             try
@@ -31,7 +31,7 @@ namespace Api_GestionFC.Repository
                         sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                         sqlCmd.Parameters.AddWithValue("@p_Nomina", nomina);
-                        if (NominaAP != null)
+                        if (NominaAP != 0)
                         {
                             sqlCmd.Parameters.AddWithValue("@p_NominaAP", NominaAP);
                         }
