@@ -11,7 +11,7 @@ namespace Api_GestionFC.Models
         public int BonoTableta { get; set; }
         public string ImgBonoTableta { get; set; }
         public string ColorBonoTableta { get; set; }
-        public int Miltiplicador { get; set; }
+        public int Multiplicador { get; set; }
         public string ImgMultiplicador { get; set; }
         public string ColorMultiplicador { get; set; }
         public int BonoBisemanal { get; set; }

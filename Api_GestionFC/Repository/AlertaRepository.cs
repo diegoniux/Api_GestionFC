@@ -491,5 +491,49 @@ namespace Api_GestionFC.Repository
             }
             return response;
         }
+        public async Task<DTO.AlertaMensajeDTO> GetMensajeGerente(int nomina)
+        {
+            var response = new DTO.AlertaMensajeDTO();
+            try
+            {
+                using (SqlConnection sqlConn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand sqlCmd = new SqlCommand("GFC.Sps_ObtieneMensaje_Banner", sqlConn))
+                    {
+                        sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        sqlCmd.Parameters.AddWithValue("@p_Nomina", nomina);
+
+                        await sqlConn.OpenAsync();
+
+                        using (var reader = await sqlCmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                response.ResultadoEjecucion.EjecucionCorrecta = Convert.ToBoolean(reader["EjecucionCorrecta"]);
+                                response.ResultadoEjecucion.ErrorMessage = reader["Mensaje"].ToString();
+                                response.ResultadoEjecucion.FriendlyMessage = reader["Mensaje"].ToString();
+                            }
+
+                            //Si la ejecución es exitosa                                 
+                            if (response.ResultadoEjecucion.EjecucionCorrecta)
+                            {
+                                reader.NextResult();
+                                while (await reader.ReadAsync())
+                                {
+                                    response.Mensaje = reader["Mensaje"].ToString();
+                                    response.SaldoAcomuladoMeta = Convert.ToDecimal(reader["SaldoAcomuladoMeta"]).ToString("C0");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return response;
+        }
     }
 }

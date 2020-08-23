@@ -72,7 +72,7 @@ namespace Api_GestionFC.Repository
                                     response.desafios.BonoTableta = Convert.ToInt32(reader["BonoTableta"]);
                                     response.desafios.ImgBonoTableta = reader["ImgBonoTableta"].ToString();
                                     response.desafios.ColorBonoTableta = reader["ColorBonoTableta"].ToString();
-                                    response.desafios.Miltiplicador = Convert.ToInt32(reader["Miltiplicador"]);
+                                    response.desafios.Multiplicador = Convert.ToInt32(reader["Multiplicador"]);
                                     response.desafios.ImgMultiplicador = reader["ImgMultiplicador"].ToString();
                                     response.desafios.ColorMultiplicador = reader["ColorMultiplicador"].ToString();
                                     response.desafios.BonoBisemanal = Convert.ToInt32(reader["BonoBisemanal"]);
@@ -162,7 +162,7 @@ namespace Api_GestionFC.Repository
             return response;
         }
 
-        public async Task<DTO.DetalleHistoricoDTO> GetDetalleEspecialistaHistorico(int nomina, DateTime Fecha, bool Posterior)
+        public async Task<DTO.DetalleHistoricoDTO> GetDetalleEspecialistaHistorico(int nomina, DateTime Fecha)
         {
             var response = new DTO.DetalleHistoricoDTO();
             try
@@ -174,7 +174,6 @@ namespace Api_GestionFC.Repository
                         sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
                         sqlCmd.Parameters.AddWithValue("@p_Nomina", nomina);
                         sqlCmd.Parameters.AddWithValue("@p_Fecha", Fecha);
-                        sqlCmd.Parameters.AddWithValue("@p_Posterior", Posterior);
 
                         await sqlConn.OpenAsync();
 
@@ -195,8 +194,12 @@ namespace Api_GestionFC.Repository
                                 {
 
                                     response.detalleHistoricoHeader.HabilitarAdelantar = Convert.ToBoolean(reader["HabilitarAdelantar"]);
-                                    response.detalleHistoricoHeader.FechaIniFin = reader["FolioSolicitud"].ToString();
+                                    response.detalleHistoricoHeader.ImgAdelantar = reader["ImgAdelantar"].ToString();
+                                    response.detalleHistoricoHeader.FechaAdelantar = Convert.ToDateTime(reader["FechaAdelantar"]);
+                                    response.detalleHistoricoHeader.FechaIniFin = reader["FechaIniFin"].ToString();
                                     response.detalleHistoricoHeader.HabilitarAnterior = Convert.ToBoolean(reader["HabilitarAnterior"]);
+                                    response.detalleHistoricoHeader.ImgAnterior = reader["ImgAnterior"].ToString();
+                                    response.detalleHistoricoHeader.FechaAnterior = Convert.ToDateTime(reader["FechaAnterior"]);
                                 }
 
                                 reader.NextResult();

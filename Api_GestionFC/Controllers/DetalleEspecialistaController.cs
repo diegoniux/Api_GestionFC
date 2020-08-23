@@ -51,13 +51,13 @@ namespace Api_GestionFC.Controllers
             return response;
         }
 
-        [HttpGet("GetDetalleEspecialistaHistorico/{nomina}/{Fecha}/{Posterior}")]
-        public async Task<DTO.DetalleHistoricoDTO> GetDetalleEspecialistaHistorico(int nomina, DateTime Fecha, bool Posterior)
+        [HttpGet("GetDetalleEspecialistaHistorico/{nomina}/{Fecha}")]
+        public async Task<DTO.DetalleHistoricoDTO> GetDetalleEspecialistaHistorico(int nomina, DateTime Fecha)
         {
             var response = new DTO.DetalleHistoricoDTO();
             try
             {
-                response = await _repository.GetDetalleEspecialistaHistorico(nomina,Fecha, Posterior);
+                response = await _repository.GetDetalleEspecialistaHistorico(nomina,Fecha);
             }
             catch (Exception ex)
             {

@@ -136,5 +136,22 @@ namespace Api_GestionFC.Controllers
             }
             return response;
         }
+
+        [HttpGet("GetMensajeGerente/{Nomina}")]
+        public async Task<DTO.AlertaMensajeDTO> GetMensajeGerente(int Nomina)
+        {
+            var response = new DTO.AlertaMensajeDTO();
+            try
+            {
+                response = await _repository.GetMensajeGerente(Nomina);
+            }
+            catch (Exception ex)
+            {
+                response.ResultadoEjecucion.EjecucionCorrecta = false;
+                response.ResultadoEjecucion.ErrorMessage = ex.Message;
+                response.ResultadoEjecucion.FriendlyMessage = ex.Message;
+            }
+            return response;
+        }
     }
 }
