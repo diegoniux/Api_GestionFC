@@ -140,7 +140,8 @@ namespace Api_GestionFC.Repository
                                         SaldoVirtual = reader["SaldoVirtual"].ToString(),
                                         TipoSolicitud = reader["TipoSolicitud"].ToString(),
                                         FechaFirma = reader["FechaFirma"].ToString(),
-                                        TieneSV = Convert.ToBoolean(reader["TieneSV"])
+                                        TieneSV = Convert.ToBoolean(reader["TieneSV"]),
+                                        FechaActivacionFCT = reader["FechaActivacionFCT"].ToString()
                                     });
                                 }
                             }
@@ -522,7 +523,7 @@ namespace Api_GestionFC.Repository
                                 while (await reader.ReadAsync())
                                 {
                                     response.Mensaje = reader["Mensaje"].ToString();
-                                    response.SaldoAcomuladoMeta = Convert.ToDecimal(reader["SaldoAcomuladoMeta"]).ToString("C0");
+                                    response.SaldoAcomuladoMeta = reader["SaldoAcomuladoMeta"].ToString() != string.Empty ? Convert.ToDecimal(reader["SaldoAcomuladoMeta"]).ToString("C0") : reader["SaldoAcomuladoMeta"].ToString();
                                 }
                             }
                         }

@@ -24,7 +24,6 @@ namespace Api_GestionFC.Models
         public string MsjEstatus { get; set; }
         public string ImgNotificacion { get; set; }
         public bool ImgWarning { get; set; }
-
         public AlertaInvestigacion()
         {
 

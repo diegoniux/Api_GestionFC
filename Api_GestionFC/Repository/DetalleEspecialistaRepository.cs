@@ -129,12 +129,24 @@ namespace Api_GestionFC.Repository
                                 reader.NextResult();
                                 while (await reader.ReadAsync())
                                 {
-                             
                                     response.detalleFolios.RegistroTraspasoId = Convert.ToInt32(reader["RegistroTraspasoId"]);
                                     response.detalleFolios.FolioSolicitud = reader["FolioSolicitud"].ToString();
                                     response.detalleFolios.EstatusId = Convert.ToInt32(reader["EstatusId"]);
                                     response.detalleFolios.EstatusDescripcion = reader["EstatusDescripcion"].ToString();
                                     response.detalleFolios.Seccion = Convert.ToInt32(reader["Seccion"]);
+                                    response.detalleFolios.Porcentaje = reader["Porcentaje"].ToString();
+                                    response.detalleFolios.ImgDocumental = reader["ImgDocumental"].ToString();
+                                    response.detalleFolios.ImgInvestigacion = reader["ImgInvestigacion"].ToString();
+                                    response.detalleFolios.ImgProcesar = reader["ImgProcesar"].ToString();
+                                    response.detalleFolios.ImgSaldoVirtual = reader["ImgSaldoVirtual"].ToString();
+                                    response.detalleFolios.TextDocumental = reader["TextDocumental"].ToString();
+                                    response.detalleFolios.TextInvestigacion = reader["TextInvestigacion"].ToString();
+                                    response.detalleFolios.TextProcesar = reader["TextProcesar"].ToString();
+                                    response.detalleFolios.TextSaldoVirtual = reader["TextSaldoVirtual"].ToString();
+                                    response.detalleFolios.ColorDocumental = reader["ColorDocumental"].ToString();
+                                    response.detalleFolios.ColorInvestigacion = reader["ColorInvestigacion"].ToString();
+                                    response.detalleFolios.ColorProcesar = reader["ColorProcesar"].ToString();
+                                    response.detalleFolios.ColorSaldoVirtual = reader["ColorSaldoVirtual"].ToString();
                                 }
 
                                 reader.NextResult();
