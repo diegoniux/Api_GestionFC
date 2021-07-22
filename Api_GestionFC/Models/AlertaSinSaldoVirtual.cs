@@ -18,5 +18,6 @@ namespace Api_GestionFC.Models
         public string TipoSolicitud { get; set; }
         public string FechaFirma { get; set; }
         public bool TieneSV { get; set; }
+        public string FechaActivacionFCT { get; set; }
     }
 }
